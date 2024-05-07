@@ -53,4 +53,13 @@
 
 - 사이트 구성요소, 목업 구성요소들 구상 필요
 
+#### 영화추천서비스 : 구플렉스
+#### 팀명 : 구찌
+#### 팀원 : 김구태, 구현우
 
+
+#### Home, 영화검색페이지, 회원가입(로그인/로그아웃), 마이페이지
+
+#### API : TMDB MOVIE, Crawling
+
+#### Model : Movie, User, Genres, Actor, MoodTag, CaseTag, Rating, Article, Comment
