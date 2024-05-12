@@ -53,7 +53,7 @@
 
 - 사이트 구성요소, 목업 구성요소들 구상 필요
 
-#### 영화추천서비스 : 구플렉스
+#### 영화추천서비스 : G-Flex
 #### 팀명 : 구찌
 #### 팀원 : 김구태, 구현우
 
@@ -62,4 +62,53 @@
 
 #### API : TMDB MOVIE, Crawling
 
-#### Model : Movie, User, Genres, Actor, MoodTag, CaseTag, Rating, Article, Comment
+#### Model : 
+
+- Movie(영화)
+  - Title(제목)
+  - Overview(줄거리)
+  - Popularity
+  - ReleaseDate(개봉일)
+  - Runtime(영화 전체 시간)
+  - Tagline(모름)
+
+- User(유저)
+  - UserId(PK)
+  - Username(유저 이름)
+
+- Genres
+  - GenreID(PK) (장르 자체 ID)
+  - Name(장르의 이름)
+ 
+- Actor
+  - ActorID(PK) (배우 자체 ID)
+  - Name (배우의 이름)
+
+
+- MoodTag(기분 별 태그)
+  - MoodTagID(PK) (분위기 자체 ID)
+  - Name(분위기의 이름)
+
+- Article(게시글)
+  - UserID(FK) (유저의 ID)
+  - ArticleID(게시글의 ID)
+  - Title(게시글 제목)
+  - Content(게시글 내용)
+  - Created_at(게시글 생성 시간)
+  - Updated_at(게시글을 수정한 시간)
+
+- Comment(댓글)
+  - ArticleID(FK) (게시글의 ID)
+  - UserID(FK) (유저의 ID)
+  - CommentID(PK) (댓글의 ID)
+  - Content (댓글의 내용)
+  - Created_at(댓글 생성 시간)
+  - Updated_at(댓글을 수정한 시간)
+
+- Rating(평점)
+  - MovieId(FK)
+  - UserID(FK)
+  - RatingID(PK) (평점의 ID)
+  - Rate(평점)
+  - Review(후기)
+
