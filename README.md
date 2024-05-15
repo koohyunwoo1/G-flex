@@ -4,6 +4,9 @@
 
 ---
 
+
+
+
 <img src ="https://img.shields.io/badge/service-Web-red"></img>
 
 
@@ -21,6 +24,11 @@
 ## 팀원 정보 및 업부 분담 내역
 - 김구태 - 아직 미정
 - 구현우 - 아직 미정
+
+### ERD
+
+<img src ="./assets/ERD.png"></img>
+
 
 
 ## 시연 영상 
