@@ -3,6 +3,7 @@ from .models import Actor, Genre, MoodTag, Movie
 
 from django.contrib.auth import get_user_model
 
+from random import sample
 
 User = get_user_model()
 
@@ -10,6 +11,32 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('pk', 'nickname')
+
+# 로그인 후 맨 처음 페이지에 인기순으로 3개의 영화를 나타내기 위한 seri~
+
+# vote_average 이게 평점임
+
+class MovieHomeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Movie
+        fields = ('title', 'vote_average',)
+
+
+# 사용자가 좋아요 누른 영화
+        
+class UserLikeMovieListSerializer(serializers.ModelSerializer):
+    class MovieSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Movie
+            fields = ('pk', 'words',)
+    
+    like_movies = MovieSerializer(many=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('pk', 'username', 'like_movies',)
+
 
 # 검색한 영화와 비슷한 영화
 
