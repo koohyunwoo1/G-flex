@@ -41,9 +41,9 @@ class UserLikeMovieListSerializer(serializers.ModelSerializer):
 # 검색한 영화와 비슷한 영화
 
 class MovieSearchSerializer(serializers.ModelSerializer):
+    similarity = serializers.FloatField(default = 0)
+    
     class Meta:
-
-        similarity = serializers.FloatField(default = 0)
 
         model = Movie
         fields = ('pk', 'words', 'title', 'poster_path', 'similarity')

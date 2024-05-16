@@ -6,6 +6,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
 
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 
@@ -19,6 +23,7 @@ User = get_user_model()
 
 # 로그인 하고 맨 처음 페이지에 인기순으로 3가지 영화가 뜨게 만드는 함수
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def home(request):
 
     movies = Movie.objects.order_by('-vote_average')[:3]

@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Article,Comment
@@ -11,16 +13,17 @@ from .serializers import CommentSerializer, ArticleSerializer, ArticleListSerial
 
 
 # 자유게시판 전체 글 조회, 글 작성
-api_view(['GET', 'POST'])
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def article_show_create(request):
 
     if request.method == 'GET':
 
-        articles = get_object_or_404(Article)
+        articles = get_list_or_404(Article)
 
         serializer = ArticleListSerializer(articles, many= True)
 
-        return serializer.data
+        return  Response(serializer.data)
     
     elif request.method == 'POST':
 
@@ -62,20 +65,28 @@ def article_detail_update_delete(request, article_pk):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
 # 게시물에 들어가서 댓글 생성하기
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def create_comment(request, article_pk):
 
-    user= request.user
-    article = get_object_or_404(Article, pk=article_pk)
-
-    serializer = CommentSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(article=article, user=user)
-
+    if request.method == 'GET':
+        article = get_object_or_404(Article, pk=article_pk)
         comments = article.comments.all()
-        serializer = CommentSerializer(comments,many=True)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        user= request.user
+        article = get_object_or_404(Article, pk=article_pk)
+
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(article=article, user=user)
+
+            comments = article.comments.all()
+            serializer = CommentSerializer(comments,many=True)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # 게시물에 들어가서 댓글 수정, 삭제하기
 @api_view(['PUT', 'DELETE'])
