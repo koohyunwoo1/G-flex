@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 export const useMovieStore = defineStore('Movie', () => {
+
+  const token = ref(null)
   const API_URL = 'http://127.0.0.1:8000'
 
   const signUp = function (payload) {
@@ -13,7 +15,7 @@ export const useMovieStore = defineStore('Movie', () => {
 
     axios({
       method: 'post',
-      url: `${API_URL}/api/v1/articles/`,
+      url: `${API_URL}/accounts/signup/`,
       data: {
         username: username,
         password1: password1,
