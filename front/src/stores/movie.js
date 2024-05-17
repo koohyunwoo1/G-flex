@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export const useMovieStore = defineStore('Movie', () => {
   const API_URL = 'http://127.0.0.1:8000'
@@ -12,6 +12,7 @@ export const useMovieStore = defineStore('Movie', () => {
 
   const movies = ref([])
   const router = useRouter()
+  const route = useRoute()
   const isLogin = computed(() => token.value !== null)
 
 
@@ -64,6 +65,7 @@ export const useMovieStore = defineStore('Movie', () => {
     router.push({ name: 'HomeView' })
   }
 
+  // 로그인 후 홈 페이지에 3가지 영화를 띄워주는 역할
   const homemovies = function() {
     axios({
       method:'get',
@@ -80,6 +82,28 @@ export const useMovieStore = defineStore('Movie', () => {
     })
   }
 
+  const movieId = route.params.id
+  const movie = ref([])
 
-  return { signUp, API_URL, logIn, logOut, token, isLogin, logIn_username, movies, homemovies }
+  const movies_information = function() {
+
+    axios({
+      method:'get',
+      url: `${store.API_URL}/api/v1/movies/${movieId}/`,
+      headers:{
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((response) => {
+      movie.value = response.data
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+
+
+
+  return { signUp, API_URL, logIn, logOut, token, isLogin, logIn_username, movies, homemovies, movieId, movie, movies_information}
 }, { persist: true })
