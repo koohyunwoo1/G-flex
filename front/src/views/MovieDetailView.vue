@@ -2,9 +2,12 @@
   <div>
 
     <div v-if="movie" >
-        <p>{{ movie.title }}</p>
-        <p>{{ movie.overview }}</p>
         <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
+        <p>제목 : {{ movie.title }}</p>
+        <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
+        <p>줄거리 : {{ movie.overview }}</p>
+        <p>상영시간 : {{ movie.runtime }}분</p>
+        <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
 
     </div>
     <p v-else>No movies available</p>

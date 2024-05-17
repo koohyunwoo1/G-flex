@@ -16,7 +16,6 @@
       <div v-if="movies" class="container-img">
         <div v-for="(movie, index) in movies" :key="index" class="movie-item">
           <RouterLink :to="{name: 'MovieDetailView', params: {id: movie.id}}">
-            <!-- {{ movie }} -->
             <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
           </RouterLink>
         </div>
@@ -70,6 +69,9 @@ onMounted(()=> {
   homemovies()
 })
 
+const showDetail = (movieId) => {
+  router.push({ name: 'MovieDetailView', params: { id: movieId } });
+}
 
 </script>
 
