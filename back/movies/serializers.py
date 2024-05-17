@@ -21,7 +21,7 @@ class MovieHomeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ('title', 'vote_average', 'overview', 'poster_path')
+        fields = ('title', 'vote_average', 'overview', 'poster_path', 'pk', 'id')
         # 출력할 필드는 제목과 평점만
 
 
@@ -88,7 +88,7 @@ class MovieDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         exclude = ('popularity', 'tagline', 'vote_average', 'vote_count', 'words',)
-
+        # fields = '__all__'
 # movie 관련 serializer 완
 
 
