@@ -15,7 +15,8 @@
     <div class="movie-img">
       <div v-if="movies" class="container-img">
         <div v-for="(movie, index) in movies" :key="index" class="movie-item">
-          <RouterLink :to="{name: 'MovieDetailView'}">
+          <RouterLink :to="{name: 'MovieDetailView', params: {id: movie.id}}">
+            <!-- {{ movie }} -->
             <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
           </RouterLink>
         </div>
@@ -32,7 +33,6 @@ import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMovieStore } from '@/stores/movie';
-
 
 const movies = ref(null)
 const store = useMovieStore();

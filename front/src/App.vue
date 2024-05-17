@@ -91,5 +91,6 @@ button:hover {
   text-decoration: none;
   font-family: fantasy;
   margin-left: 20px;
+  color: skyblue;
 }
 </style>
