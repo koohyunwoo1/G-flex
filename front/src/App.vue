@@ -72,7 +72,7 @@ body {
 }
 
 button {
-  background-color: orange;
+  background-color: #80CEE1;
   color: #ffffff;
   border-radius: 10px;
   border: none;

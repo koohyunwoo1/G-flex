@@ -27,7 +27,7 @@
 
 ### ERD
 
-<img src ="./assets/ERD_final.png"></img>
+<img src ="./assets/ERD.png"></img>
 
 
 ## 시연 영상 
