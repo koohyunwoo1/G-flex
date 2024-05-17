@@ -65,20 +65,31 @@ const router = createRouter({
 
 import { useMovieStore } from '@/stores/movie'
 
-
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
   const store = useMovieStore()
 
-  if (to.name === 'ProfileView' && store.isLogin === false) {
+  const authRequiredPages = [
+    'ProfileView',
+    'GenreSearchView',
+    'GenreView',
+    'GenreNotFoundView',
+    'MovieDetailView',
+    'SearchView'
+  ]
+
+  if (authRequiredPages.includes(to.name) && !store.isLogin) {
     window.alert('로그인 하세요.')
-    return { name: 'LogInView'}
+    return next({ name: 'LogInView' })
   }
 
+  const guestOnlyPages = ['SignUpView', 'LogInView']
 
-  if((to.name === 'SignUpView' || to.name === 'LogInView') && (store.isLogin === true)) {
+  if (guestOnlyPages.includes(to.name) && store.isLogin) {
     window.alert('이미 로그인 했습니다.')
-    return { name: 'HomeView' }
+    return next({ name: 'HomeView' })
   }
+
+  next() 
 })
 
 
