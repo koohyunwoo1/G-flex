@@ -1,86 +1,129 @@
 <template>
-  <div>
-    <h1>장르 or 무드 선택하는 페이지</h1>
+  <div class="container">
+      <h1>장르</h1>
+
     <div>
       <div v-if="genres">
-        <div v-for="(genre, index) in genres" :key="index">
-          <button>{{ genre.name }}</button>
-        </div>
+        <span v-for="(genre, index) in genres" :key="index">
+          <label :class="{ 'selected': selectedGenres.includes(genre.pk)}" @click="toggleGenre(genre.pk)">
+            {{ genre.name }}
+          </label>
+        </span>
       </div>
-      <p v-else>No movies available</p>
+      <p v-else>No genres available</p>
     </div>
+
+
+
+      <h1 style="margin-top: 80px;">무드</h1>
 
     <div>
       <div v-if="moods">
-        <div v-for="(mood, index) in moods" :key="index">
-          <button>{{ mood.name }}</button>
-        </div>
+        <span v-for="(mood, index) in moods" :key="index">
+          <label :class="{ 'selected': selectedMoods.includes(mood.id) }" @click="toggleMood(mood.id)">
+            {{ mood.name }}
+          </label>
+        </span>
       </div>
-      <p v-else>No movies available</p>
+      <p v-else>No moods available</p>
     </div>
   </div>
+
+  <RouterLink :to=" { name: 'GenreSearchView' }">
+    <div class="button-container">
+      <button class="button">Go</button>
+    </div>
+  </RouterLink>
+
+  <RouterView/>
 </template>
 
 <script setup>
-import axios from 'axios';
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useMovieStore } from '@/stores/modules/genres_and_moods';
+import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import { useMovieStore } from '@/stores/modules/genres_and_moods'
+import { RouterLink, RouterView } from 'vue-router'
 
 const store = useMovieStore()
-const router = useRouter()
-
-const genres = ref(null)
+const genres = ref([])
+const selectedGenres = ref([])
+const moods = ref([])
+const selectedMoods = ref([])
 
 const genreslist = function() {
-  axios({
-    method:'get',
-    url: `${store.API_URL}/api/v1/movies/genre/`,
-    params: {
-      genres: genres.value
-    },
-
-    headers:{
-      Authorization: `Token ${store.token}`
-    }
+  axios.get(`${store.API_URL}/api/v1/movies/genre/`, {
+    headers: { Authorization: `Token ${store.token}` }
   })
   .then(res => {
-    genres.value = res.data
+    genres.value = res.data;
+    console.log(genres)
   })
   .catch(err => {
-    console.log('error 상황 발생')
-  })
+    console.error(err)
+  });
 }
 
-const moods = ref(null)
-
 const moodtags = function() {
-  axios({
-    method:'get',
-    url: `${store.API_URL}/api/v1/movies/mood/`,
-    params: {
-      moods: moods.value
-    },
-
-    headers:{
-      Authorization: `Token ${store.token}`
-    }
+  axios.get(`${store.API_URL}/api/v1/movies/mood/`, {
+    headers: { Authorization: `Token ${store.token}` }
   })
   .then(res => {
     moods.value = res.data
+    console.log(moods)
   })
   .catch(err => {
-    console.log('error 상황 발생')
-  })
+    console.error(err)
+  });
 }
 
-onMounted(()=> {
-  genreslist(),
+const toggleGenre = (genrePk) => {
+  if (selectedGenres.value.includes(genrePk)) {
+    selectedGenres.value = selectedGenres.value.filter(pk => pk !== genrePk);
+  } else {
+    selectedGenres.value.push(genrePk)
+  }
+}
+
+const toggleMood = (moodId) => {
+  if (selectedMoods.value.includes(moodId)) {
+    selectedMoods.value = selectedMoods.value.filter(id => id !== moodId);
+  } else {
+    selectedMoods.value.push(moodId)
+  }
+}
+
+onMounted(() => {
+  genreslist()
   moodtags()
 })
-
 </script>
 
 <style scoped>
+label {
+  padding: 8px 16px;
+  margin: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  max-width: fit-content;
+  border-radius: 5px;
+  border: solid 1px gray;
+}
+
+.button {
+  margin-top: 50px;
+}
+
+.selected {
+  background-color: #BBD0E9;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+.button-container {
+  text-align: right;
+}
 
 </style>
