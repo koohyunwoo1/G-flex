@@ -63,4 +63,23 @@ const router = createRouter({
   ]
 })
 
+import { useMovieStore } from '@/stores/movie'
+
+
+router.beforeEach((to, from) => {
+  const store = useMovieStore()
+
+  if (to.name === 'ProfileView' && store.isLogin === false) {
+    window.alert('로그인 하세요.')
+    return { name: 'LogInView'}
+  }
+
+
+  if((to.name === 'SignUpView' || to.name === 'LogInView') && (store.isLogin === true)) {
+    window.alert('이미 로그인 했습니다.')
+    return { name: 'HomeView' }
+  }
+})
+
+
 export default router
