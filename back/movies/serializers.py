@@ -1,3 +1,4 @@
+
 from rest_framework import serializers
 from .models import Actor, Genre, MoodTag, Movie
 
@@ -20,7 +21,8 @@ class MovieHomeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ('title', 'vote_average',)
+        fields = ('title', 'vote_average', 'overview', 'poster_path')
+        # 출력할 필드는 제목과 평점만
 
 
 # 사용자가 좋아요 누른 영화
