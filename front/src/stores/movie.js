@@ -6,6 +6,8 @@ import { useRouter } from 'vue-router'
 export const useMovieStore = defineStore('Movie', () => {
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
+
+  const logIn_username = ref('')
   // const movies = ref([])
 
 
@@ -47,6 +49,8 @@ export const useMovieStore = defineStore('Movie', () => {
       console.log('로그인 성공')
       console.log(response.data)
       token.value = response.data.key
+      logIn_username.value = username
+      console.log(logIn_username)
       router.push({ name: 'HomeView' })
     })
     .catch((error) => {
@@ -59,5 +63,5 @@ export const useMovieStore = defineStore('Movie', () => {
     router.push({ name: 'HomeView' })
   }
 
-  return { signUp, API_URL, logIn, logOut, token, isLogin }
+  return { signUp, API_URL, logIn, logOut, token, isLogin, logIn_username }
 }, { persist: true })
