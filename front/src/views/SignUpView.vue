@@ -9,11 +9,11 @@
       </div>
       <div class="form-group">
         <label for="password1">비밀번호</label>
-        <input v-model="password1" placeholder="비밀번호를 입력하세요." type="password" id="password1" name="password1" class="form-control">
+        <input v-model="password1" placeholder="비밀번호를 입력해주세요." type="password" id="password1" name="password1" class="form-control">
       </div>
       <div class="form-group">
         <label for="password2">비밀번호 확인</label>
-        <input v-model="password2" placeholder="비밀번호를 다시 한 번 입력하세요" type="password" id="password2" name="password2" class="form-control">
+        <input v-model="password2" placeholder="비밀번호를 다시 한 번 입력해주세요." type="password" id="password2" name="password2" class="form-control">
       </div>
       <br>
       <div class="form-group">
