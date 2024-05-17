@@ -21,12 +21,13 @@ from jellyfish import jaro_winkler_similarity
 
 User = get_user_model()
 
-# 로그인 하고 맨 처음 페이지에 인기순으로 3가지 영화가 뜨게 만드는 함수
+# 로그인 하고 맨 처음 페이지에 투표수가 가장 많은 영화가 3가지 뜨게 만드는 함수
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def home(request):
 
-    movies = Movie.objects.order_by('-vote_average')[:3]
+    movies = Movie.objects.order_by('-vote_count')[:3]
+    # 
     serializer = MovieHomeSerializer(movies, many=True)
 
     return Response(serializer.data)
@@ -40,17 +41,6 @@ def movie_detail(request, movie_pk):
     serializer = MovieDetailSerializer(movie,)
 
     return Response(serializer.data)
-
-# 영화 검색
-@api_view(['GET'])
-def search_movie(request, movie_name):
-
-    movies = get_list_or_404(Movie)
-
-    serializer = MovieSearchSerializer(movies, many=True)
-
-    serializer = serach(serializer.data, movie_name)
-    return Response(serializer[:10])
 
 # 좋아요 한 영화
 @api_view(['POST'])
@@ -67,6 +57,18 @@ def like_movie(request, movie_pk):
         movie.like_users.add(user)
         serializer = MovieDetailSerializer(movie)
         return Response(serializer.data)
+
+# 영화 검색
+@api_view(['GET'])
+def search_movie(request, movie_name):
+
+    movies = get_list_or_404(Movie)
+
+    serializer = MovieSearchSerializer(movies, many=True)
+
+    serializer = serach(serializer.data, movie_name)
+    return Response(serializer[:10])
+
 
 # 좋아요 한 영화를 기반으로 추천?
 @api_view(['GET'])
