@@ -15,6 +15,11 @@
           로그인
         </button>
       </RouterLink> 
+      <RouterLink :to="{ name: 'HomeView' }">
+          <button @click="logOut">
+          로그아웃
+        </button>
+      </RouterLink> 
         <RouterLink :to="{ name: 'SignUpView' }">
           <button>
             회원가입
@@ -34,6 +39,14 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
+import { useMovieStore } from './stores/movie';
+
+const store = useMovieStore()
+
+const logOut = function() {
+  store.logOut()
+}
 </script>
 
 <style>

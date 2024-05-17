@@ -3,14 +3,14 @@
     <h1>
       로그인페이지
     </h1>
-    <form>
+    <form @submit.prevent="logIn">
       <div>
         <label for="username">username : </label>
-        <input type="text">
+        <input type="text" v-model.trim="username" id="username">
       </div>
       <div>
         <label for="password">password : </label>
-        <input type="password">
+        <input type="password" v-model.trim="password" id="password">
       </div>
       <input type="submit">
     </form>
