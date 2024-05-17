@@ -1,32 +1,67 @@
 <template>
-  <div>
-    <p>{{ username }}</p>
+  <h1>{{ store.logIn_username }}님 안녕하세요 !</h1>
+  <div class="container">
+    <div class="search-container">
+      <input type="text" v-model="searchTerm" placeholder="영화를 한번 찾아보세요 !" class="search-input">
+      <button @click="search" class="search-button">
+        <span role="img" aria-label="search" class="search-icon">🔍</span>
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useMovieStore } from '@/stores/movie';
-import axios from 'axios';
 
 const store = useMovieStore();
-const username = ref(null);
+const router = useRouter();
+const searchTerm = ref('');
 
-const getProfile = function() {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/api/v1/profile/${store.username}`
-  })
-  .then((res) => {
-    username.value = res.data.username
-  })
-  .catch(error => {
-    console.log(error)
-  })
+const search = () => {
+  if (searchTerm.value.trim() !== '') {
+    router.push({ name: 'SearchView', query: { q: searchTerm.value } });
+  }
 }
-
 </script>
 
 <style scoped>
-/* 스타일을 추가할 수 있습니다. */
+
+h1 {
+  text-align: center;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-container {
+  margin-top: 100px;
+  background-color: #333;
+  width: 350px;
+  padding: 10px 20px;
+  border-radius: 25px;
+}
+
+.search-input {
+  background-color: #eee;
+  border: none;
+  border-radius: 15px;
+  padding: 12px 12px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+.search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.search-icon {
+  font-size: 24px;
+}
+
 </style>
