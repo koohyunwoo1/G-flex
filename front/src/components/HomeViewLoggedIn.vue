@@ -1,4 +1,5 @@
 <template>
+  
   <h1>{{ store.logIn_username }}님 안녕하세요 !</h1>
   <div class="container">
     <div class="search-container">
@@ -8,13 +9,31 @@
       </button>
     </div>
   </div>
+
+  
+  <div>
+    <div v-if="movies">
+      <div v-for="(movie, index) in movies" :key="index">
+        <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
+      </div>
+    </div>
+    <p v-else>No movies available</p>
+  </div>
+
+
+
+
+
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMovieStore } from '@/stores/movie';
 
+
+const movies = ref(null)
 const store = useMovieStore();
 const router = useRouter();
 const searchTerm = ref('');
@@ -24,6 +43,33 @@ const search = () => {
     router.push({ name: 'SearchView', query: { q: searchTerm.value } });
   }
 }
+
+
+const homemovies = function() {
+  axios({
+    method:'get',
+    url : `${store.API_URL}/api/v1/movies/`,
+    params: {
+      movies: movies.value
+    },
+
+    headers:{
+      Authorization: `Token ${store.token}`
+    }
+  })
+  .then(res => {
+    movies.value = res.data
+  })
+  .catch(err => {
+    console.err('error 발생')
+  })
+}
+
+onMounted(()=> {
+  homemovies()
+})
+
+
 </script>
 
 <style scoped>

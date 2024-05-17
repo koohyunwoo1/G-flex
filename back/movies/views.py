@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from .models import Actor, Genre, Movie, MoodTag
 from .serializers import UserSerializer, MovieSearchSerializer, MovieListSerializer, UserChoiceSimilarMovieSerializer, MovieDetailSerializer, GenreSerializer, MoodTagSerializer, MovieHomeSerializer, UserLikeMovieListSerializer

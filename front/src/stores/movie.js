@@ -10,7 +10,7 @@ export const useMovieStore = defineStore('Movie', () => {
   const logIn_username = ref('')
   // const movies = ref([])
 
-
+  const movies = ref([])
   const router = useRouter()
   const isLogin = computed(() => token.value !== null)
 
@@ -63,5 +63,22 @@ export const useMovieStore = defineStore('Movie', () => {
     router.push({ name: 'HomeView' })
   }
 
-  return { signUp, API_URL, logIn, logOut, token, isLogin, logIn_username }
+  const homemovies = function() {
+    axios({
+      method:'get',
+      url: `${API_URL}/api/v1/movies/`,
+      headers:{
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((response)=> {
+      movies.value = response.data
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
+
+
+  return { signUp, API_URL, logIn, logOut, token, isLogin, logIn_username, movies, homemovies }
 }, { persist: true })
