@@ -43,8 +43,8 @@ const router = createRouter({
       component: NotFoundView
     },
     {
-      path: '/moviedetail',
-      // path: '/moviedetail/:id',
+      // path: '/moviedetail',
+      path: '/movies/:id',
       name: 'MovieDetailView',
       component: MovieDetailView
     },
