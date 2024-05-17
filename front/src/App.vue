@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="navbar">
+      <div>
         <RouterLink :to="{ name: 'HomeView' }" class="logo">
           G-Flex
         </RouterLink> 
+      </div>
       <div class="right-links">
         <RouterLink :to="{ name: 'GenreView' }">
           <button v-if="store.isLogin">
@@ -76,6 +78,11 @@ button {
   border: none;
   width: 80px;
   height: 40px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: red;
 }
 
 .logo {
@@ -83,5 +90,6 @@ button {
   color: white;
   text-decoration: none;
   font-family: fantasy;
+  margin-left: 20px;
 }
 </style>

@@ -13,3 +13,4 @@ def profile(request, username):
     user = get_object_or_404(User, username=username)
     serializer = ProfileSerializer(user)
     return Response(serializer.data)
+
