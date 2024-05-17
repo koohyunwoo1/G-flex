@@ -6,6 +6,8 @@ import { useRouter } from 'vue-router'
 export const useMovieStore = defineStore('Movie', () => {
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
+  // const movies = ref([])
+
 
   const router = useRouter()
   const isLogin = computed(() => token.value !== null)
