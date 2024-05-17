@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
 from .models import Actor, Genre, Movie, MoodTag
-from .serializers import UserSerializer, MovieSearchSerializer, MovieListSerializer, UserChoiceSimilarMovieSerializer, MovieDetailSerializer, GenreSerializer, MoodTagSerializer, MovieHomeSerializer, UserLikeMovieListSerializer
+from .serializers import UserSerializer, MovieSearchSerializer, MovieListSerializer, UserChoiceSimilarMovieSerializer, MovieDetailSerializer, GenreSerializer, MoodTagSerializer,MoodListSerializer, MovieHomeSerializer, UserLikeMovieListSerializer, GenreListSerializer
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -160,3 +160,32 @@ def serach(lst, keyword):
         fetch_data.append(tmp)
     fetch_data.sort(key=lambda x : -x['similarity'])
     return fetch_data
+
+# 장르
+
+# 장르 전체를 조회하는 views
+
+@api_view(['GET'])
+def genre_list(request):
+
+    genres = Genre.objects.all()
+    serializer = GenreListSerializer(genres, many=True)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def genre_detail(request, genre_pk):
+
+    genre = get_object_or_404(Genre, pk=genre_pk)
+    serializer = GenreSerializer(genre)
+    return Response(serializer.data)
+
+# mood
+
+# mood 전체를 조회하는 views
+@api_view(['GET'])
+def mood_list(request):
+    moods = MoodTag.objects.all()
+    serializer = MoodListSerializer(moods, many=True)
+
+    return Response(serializer.data)
