@@ -22,4 +22,11 @@ urlpatterns = [
     path('<int:movie_pk>/similar/', views.similar_movie, name='similar_movie'),
     path('<str:movie_name>/', views.search_movie, name='search_movie'),
 
+    # 댓글
+    path('<int:movie_pk>/comments/', views.create_show_comment, name='create_show_comment'),
+    path('<int:movie_pk>/comments/<int:comment_pk>/', views.update_delete_comment, name='update_delete_comment'),
+
+
+
+
 ]

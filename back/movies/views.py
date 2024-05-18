@@ -1,7 +1,9 @@
 
 from django.shortcuts import render
-from .models import Actor, Genre, Movie, MoodTag
-from .serializers import UserSerializer, MovieSearchSerializer, MovieListSerializer, UserChoiceSimilarMovieSerializer, MovieDetailSerializer, GenreSerializer, MoodTagSerializer,MoodListSerializer, MovieHomeSerializer, UserLikeMovieListSerializer, GenreListSerializer
+from .models import Actor, Genre, Movie, MoodTag, Comment
+from .serializers import UserSerializer, MovieSearchSerializer, MovieListSerializer, UserChoiceSimilarMovieSerializer, MovieDetailSerializer, GenreSerializer, MoodTagSerializer,MoodListSerializer, MovieHomeSerializer, UserLikeMovieListSerializer, GenreListSerializer, CommentSerializer
+
+from rest_framework import status
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -39,9 +41,61 @@ def home(request):
 def movie_detail(request, movie_pk):
 
     movie = get_object_or_404(Movie, pk=movie_pk)
-    serializer = MovieDetailSerializer(movie,)
+    serializer = MovieDetailSerializer(movie)
 
     return Response(serializer.data)
+
+# detail 페이지에서 댓글 달기, 조회
+
+@api_view(['GET', 'POST'])
+def create_show_comment(request, movie_pk):
+
+    if request.method == 'GET':
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        comments = movie.comments.all()
+
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+    
+
+    elif request.method == 'POST':
+        user= request.user
+        movie = get_object_or_404(Movie, pk=movie_pk)
+
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+
+            serializer.save(movie=movie, user=user)
+
+            comments = movie.comments.all()
+            serializer = CommentSerializer(comments,many=True)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+# 만든 댓글 수정, 삭제하기
+@api_view(['PUT', 'DELETE'])
+def update_delete_comment(request, movie_pk, comment_pk):
+
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    comment = get_object_or_404(Comment, pk=comment_pk)
+
+    if request.method == 'PUT':
+
+        if request.user == comment.user:
+            serializer = CommentSerializer(instance=comment, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                comments = movie.comments.all()
+                serializer = CommentSerializer(comments, many=True)
+                return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+
+        if request.user == comment.user:
+            comment.delete()
+            comments = movie.comments.all()
+            serializer = CommentSerializer(comments, many=True)
+            return Response(serializer.data)
 
 # 좋아요 한 영화
 @api_view(['POST'])

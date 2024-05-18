@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from .models import Actor, Genre, MoodTag, Movie
+from .models import Actor, Genre, MoodTag, Movie, Comment
 
 from django.contrib.auth import get_user_model
 
@@ -90,6 +90,23 @@ class MovieDetailSerializer(serializers.ModelSerializer):
         exclude = ('popularity', 'tagline', 'vote_average', 'vote_count', 'words',)
         # fields = '__all__'
 # movie 관련 serializer 완
+
+# 댓글 관련 serializer
+
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class UserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('pk', 'username',)
+
+    user = UserSerializer(read_only = True)
+
+    class Meta:
+        model = Comment
+        fields = ('pk', 'content', 'created_at', 'updated_at', 'movie', 'user')
+        read_only_fields = ('movie',)
 
 
 # 장르 상세 정보

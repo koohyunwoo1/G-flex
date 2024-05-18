@@ -11,6 +11,19 @@
 
     </div>
     <p v-else>No movies available</p>
+    
+    <div>
+      <textarea v-model="newCommentContent" placeholder="댓글을 입력하세요" @keyup.enter="createCommentOnEnter"></textarea>
+      <button @click="createComment">댓글 작성</button>
+    </div>
+
+    <div v-if="comments.length > 0">
+      <ul>
+        <li v-for="comment in comments" :key="comment.id">
+          <p>{{ comment.user.username }}: {{ comment.content }}</p>
+        </li>
+      </ul>
+    </div>
 
 
   </div>
@@ -27,6 +40,10 @@ const route = useRoute()
 const movieId = route.params.id
 
 const movie = ref(null)
+
+
+const comments = ref([])
+const newCommentContent = ref('')
 
 const movies_information = function() {
 
@@ -45,8 +62,52 @@ const movies_information = function() {
   })
 }
 
+const fetchComments = function() {
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/api/v1/movies/${movieId}/comments/`,
+    headers: {
+      Authorization: `Token ${store.token}`
+    }
+  })
+  .then((response) => {
+    comments.value = response.data
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+const createComment = function() {
+  axios({
+    method: 'post',
+    url: `${store.API_URL}/api/v1/movies/${movieId}/comments/`,
+    headers: {
+      Authorization: `Token ${store.token}`
+    },
+    data: {
+      content: newCommentContent.value
+    }
+  })
+  .then((response) => {
+    comments.value = response.data
+    newCommentContent.value = ''
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+const createCommentOnEnter = (event) => {
+  if (event.key === 'Enter') {
+    createComment();
+  }
+}
+
 onMounted(()=> {
   movies_information()
+  fetchComments()
+
 })
   
 </script>
