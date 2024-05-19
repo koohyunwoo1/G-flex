@@ -11,7 +11,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('pk', 'nickname')
+        fields = ('pk', 'nickname', 'id')
 
 # 로그인 후 맨 처음 페이지에 인기순으로 3개의 영화를 나타내기 위한 seri~
 
