@@ -3,7 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import LogInView from '@/views/LogInView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import ProfileView from '@/views/ProfileView.vue'
-import SearchView from '@/views/SearchView.vue'
+// import SearchView from '@/views/SearchView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import MovieDetailView from '@/views/MovieDetailView.vue'
 import GenreView from '@/views/GenreView.vue'
@@ -32,14 +32,14 @@ const router = createRouter({
       name: 'ProfileView',
       component: ProfileView
     },
-    {
-      path: '/search',
-      name: 'SearchView',
-      component: SearchView
-    },
+    // {
+    //   path: '/search',
+    //   name: 'SearchView',
+    //   component: SearchView
+    // },
     {
       path: '/notfound',
-      name: 'NotFound',
+      name: 'NotFoundView',
       component: NotFoundView
     },
     {
@@ -72,7 +72,7 @@ router.beforeEach((to, from, next) => {
     'GenreView',
     'GenreNotFoundView',
     'MovieDetailView',
-    'SearchView'
+    // 'SearchView'
   ]
 
   if (authRequiredPages.includes(to.name) && !store.isLogin) {
