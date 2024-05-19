@@ -20,10 +20,10 @@
       <ul>
         <li v-for="comment in comments" :key="comment.pk">
           <p>{{ comment.user.username }}: {{ comment.content }}</p>
-          <button @click="deleteComment(comment.pk)">삭제</button>
-          <!-- 수정 버튼 클릭 시 해당 댓글만 수정 가능하도록 수정 -->
-          <button @click="toggleEdit(comment)">수정</button>
-          <!-- 수정 상태에 따라 수정하는 칸을 표시하도록 변경 -->
+          <template v-if="comment.pk !== editedCommentId">
+            <button @click="deleteComment(comment.pk)">삭제</button>
+            <button @click="toggleEdit(comment)">수정</button>
+          </template>
           <div v-if="comment.pk === editedCommentId">
             <textarea v-model="editedCommentContent"></textarea>
             <button @click="updateComment">수정 완료</button>
