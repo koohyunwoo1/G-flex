@@ -59,18 +59,18 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import axios from 'axios';
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useMovieStore } from '@/stores/movie';
+import { RouterLink, RouterView } from 'vue-router'
+import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useMovieStore } from '@/stores/movie'
 
-const movies = ref(null);
-const exactMatches = ref([]);
-const recommendedMovies = ref([]);
-const store = useMovieStore();
-const router = useRouter();
-const searchTerm = ref('');
+const movies = ref(null)
+const exactMatches = ref([])
+const recommendedMovies = ref([])
+const store = useMovieStore()
+const router = useRouter()
+const searchTerm = ref('')
 
 const search = async () => {
   if (searchTerm.value.trim() !== '') {
@@ -81,26 +81,25 @@ const search = async () => {
         }
       });
 
-      const allResults = response.data;
-      exactMatches.value = allResults.filter(movie => movie.title.includes(searchTerm.value));
-      recommendedMovies.value = allResults.filter(movie => !movie.title.includes(searchTerm.value));
+      const allResults = response.data
+      exactMatches.value = allResults.filter(movie => movie.title.includes(searchTerm.value))
+      recommendedMovies.value = allResults.filter(movie => !movie.title.includes(searchTerm.value))
 
-      if (exactMatches.value.length > 0) {
-        console.log('Exact matches:', exactMatches.value);
+      if (exactMatches.value.length === 0) {
+        router.push({ name: 'NotFoundView' })
       } else {
-        alert('No exact matches found.');
-      }
-
-      if (recommendedMovies.value.length > 0) {
-        console.log('Recommended movies:', recommendedMovies.value);
-      } else {
-        console.log('No recommendations available.');
+        console.log('Exact matches:', exactMatches.value)
+        if (recommendedMovies.value.length > 0) {
+          console.log('Recommended movies:', recommendedMovies.value)
+        } else {
+          console.log('No recommendations available.')
+        }
       }
     } catch (error) {
-      console.error('Error occurred while searching:', error);
+      console.error('Error occurred while searching:', error)
     }
   }
-};
+}
 
 const homemovies = async () => {
   try {
@@ -109,19 +108,19 @@ const homemovies = async () => {
         Authorization: `Token ${store.token}`
       }
     });
-    movies.value = response.data;
+    movies.value = response.data
   } catch (error) {
-    console.error('Error occurred while fetching movies:', error);
+    console.error('Error occurred while fetching movies:', error)
   }
 };
 
 onMounted(() => {
-  homemovies();
+  homemovies()
 });
 
 const showDetail = (movieId) => {
-  router.push({ name: 'MovieDetailView', params: { id: movieId } });
-};
+  router.push({ name: 'MovieDetailView', params: { id: movieId } })
+}
 </script>
 
 <style scoped>
