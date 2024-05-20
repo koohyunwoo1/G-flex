@@ -32,11 +32,7 @@ const router = createRouter({
       name: 'ProfileView',
       component: ProfileView
     },
-    // {
-    //   path: '/search',
-    //   name: 'SearchView',
-    //   component: SearchView
-    // },
+
     {
       path: '/notfound',
       name: 'NotFoundView',
