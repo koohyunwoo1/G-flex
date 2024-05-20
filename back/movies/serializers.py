@@ -115,7 +115,7 @@ class GenreSerializer(serializers.ModelSerializer):
     class MovieSerializer(serializers.ModelSerializer):
         class Meta:
             model = Movie
-            fields = ('title', 'poster_path', 'tagline',)
+            fields = ('title', 'poster_path')
     
     movies = MovieSerializer(many=True, read_only=True)
 

@@ -4,49 +4,42 @@
     <div>
       <div v-if="genres">
         <span v-for="(genre, index) in genres" :key="index">
-          <label :class="{ 'selected': selectedGenres.includes(genre.pk)}" @click="toggleGenre(genre.pk)">
+          <label :class="{ 'selected': selectedGenres.includes(genre.pk)}" @click="selectGenre(genre.pk)">
             {{ genre.name }}
           </label>
         </span>
       </div>
       <p v-else>No genres available</p>
     </div>
-
-    <h1 style="margin-top: 80px;">무드</h1>
-    <div>
-      <div v-if="moods">
-        <span v-for="(mood, index) in moods" :key="index">
-          <label :class="{ 'selected': selectedMoods.includes(mood.id) }" @click="toggleMood(mood.id)">
-            {{ mood.name }}
-          </label>
-        </span>
-      </div>
-      <p v-else>No moods available</p>
-    </div>
   </div>
 
   <div>
-    <RouterLink v-if="selectedGenres.length <= 3 && selectedMoods.length <= 3" :to="{ name: 'GenreSearchView' }">
-      <div class="button-container">
-        <button class="button">Go</button>
-      </div>
-    </RouterLink>
+    <div class="button-container">
+      <button class="button" @click="fetchMovies" :disabled="selectedGenres.length === 0">Go</button>
+    </div>
   </div>
 
+  <div v-if="movies.length">
+    <h2>선택된 장르의 영화</h2>
+    <div class="movies-container">
+      <div v-for="(movie, index) in movies.slice(0, 5)" :key="index" class="movie-item">
+        <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-poster" />
+        <p>{{ movie.title }}</p>
+      </div>
+    </div>
+  </div>
   <RouterView/>
 </template>
 
 <script setup>
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useMovieStore } from '@/stores/modules/genres_and_moods'
-import { RouterLink, RouterView } from 'vue-router'
 
 const store = useMovieStore()
 const genres = ref([])
 const selectedGenres = ref([])
-const moods = ref([])
-const selectedMoods = ref([])
+const movies = ref([])
 
 const genreslist = () => {
   axios.get(`${store.API_URL}/api/v1/movies/genre/`, {
@@ -60,42 +53,34 @@ const genreslist = () => {
   });
 }
 
-const moodtags = () => {
-  axios.get(`${store.API_URL}/api/v1/movies/mood/`, {
-    headers: { Authorization: `Token ${store.token}` }
-  })
-  .then(res => {
-    moods.value = res.data
-  })
-  .catch(err => {
-    console.error(err)
+const selectGenre = (genrePk) => {
+  if (selectedGenres.value.includes(genrePk)) {
+    selectedGenres.value = selectedGenres.value.filter(pk => pk !== genrePk);
+  } else {
+    selectedGenres.value.push(genrePk);
+  }
+}
+
+const fetchMovies = () => {
+  if (selectedGenres.value.length === 0) return;
+
+  const promises = selectedGenres.value.map(genrePk => {
+    return axios.get(`${store.API_URL}/api/v1/movies/genre/${genrePk}/`, {
+      headers: { Authorization: `Token ${store.token}` }
+    });
   });
+
+  Promise.all(promises)
+    .then(responses => {
+      const mergedMovies = responses.flatMap(response => response.data.movies);
+      movies.value = mergedMovies;
+    })
+    .catch(err => {
+      console.error(err);
+    });
 }
 
-const toggleGenre = (genrePk) => {
-  if (selectedGenres.value.length < 3 || selectedGenres.value.includes(genrePk)) {
-    if (selectedGenres.value.includes(genrePk)) {
-      selectedGenres.value = selectedGenres.value.filter(pk => pk !== genrePk);
-    } else {
-      selectedGenres.value.push(genrePk)
-    }
-  }
-}
-
-const toggleMood = (moodId) => {
-  if (selectedMoods.value.length < 3 || selectedMoods.value.includes(moodId)) {
-    if (selectedMoods.value.includes(moodId)) {
-      selectedMoods.value = selectedMoods.value.filter(id => id !== moodId);
-    } else {
-      selectedMoods.value.push(moodId)
-    }
-  }
-}
-
-onMounted(() => {
-  genreslist()
-  moodtags()
-})
+genreslist()
 </script>
 
 <style scoped>
