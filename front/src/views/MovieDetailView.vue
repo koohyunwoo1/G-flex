@@ -18,32 +18,33 @@
     </div>
     
       <p v-else>No movies available</p>
-      
-      <div class="like-comments-section">
-        <div class="comment-input">
-          <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter"></textarea>
-          <button @click="createComment">댓글 작성</button>
+
+        <div class="like-comments-section">
+          <div class="comment-input">
+            <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter"></textarea>
+            <button @click="createComment">댓글 작성</button>
+          </div>
+        </div>
+        
+        <div v-if="comments.length > 0">
+          <ul>
+            <li v-for="comment in comments" :key="comment.pk" style="margin-left: 250px;">
+              <p>{{ comment.user.username }}: {{ comment.content }}</p>
+              <template v-if="comment.pk !== editedCommentId">
+                <button @click="deleteComment(comment.pk)">삭제</button>
+                <button @click="toggleEdit(comment)">수정</button>
+              </template>
+              <div v-if="comment.pk === editedCommentId">
+                <textarea v-model="editedCommentContent"></textarea>
+                <button @click="updateComment">수정 완료</button>
+                <button @click="cancelEdit">취소</button>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-      
-    <div v-if="comments.length > 0" >
-      <ul>
-        <li v-for="comment in comments" :key="comment.pk">
-          <p>{{ comment.user.username }}: {{ comment.content }}</p>
-          <template v-if="comment.pk !== editedCommentId">
-            <button @click="deleteComment(comment.pk)">삭제</button>
-            <button @click="toggleEdit(comment)">수정</button>
-          </template>
-          <div v-if="comment.pk === editedCommentId">
-            <textarea v-model="editedCommentContent"></textarea>
-            <button @click="updateComment">수정 완료</button>
-            <button @click="cancelEdit">취소</button>
-          </div>
-        </li>
-      </ul>
-    </div>
 
-  </div>
+
 </template>
 
 <script setup>
@@ -118,6 +119,7 @@ const fetchComments = function() {
     }
   })
   .then((response) => {
+    console.log(response)
     comments.value = response.data
   })
   .catch((error) => {
@@ -239,7 +241,7 @@ onMounted(() => {
 
 
 .like-comments-section {
-  margin-left: 20px;
+  margin-left: 30px;
   margin-top: 20px;
 }
 
