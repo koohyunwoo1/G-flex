@@ -1,22 +1,21 @@
 <template>
   <div>
-    <h1>마이 페이지</h1>
-
-
-    <div>
-      <h3>좋아요를 누른 영화</h3>
+    <div style="margin: 100px;">
+      <h3>{{ store.logIn_username }}님께서 좋아하시는 영화 !</h3>
       <div v-if="likedMovies.length === 0">
         <p>좋아하는 영화가 없습니다.</p>
       </div>
       <div v-else>
         <span v-for="movie in likedMovies" :key="movie.id" style="margin-left: 20px;">
-          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" style="width: 400px;">
+          <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.id }}">
+          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" style="width: 400px;" class="MovieCard">
+          </RouterLink>
         </span>
       </div>
     </div>
 
-    <div>
-      <h3>최근 검색한 영화</h3>
+    <div style="margin: 100px;">
+      <h3>{{ store.logIn_username }}님께서 최근 검색하신 영화 !</h3>
       <ul>
         <!-- 검색 결과를 표시
         <li v-for="movie in exactMatches" :key="movie.pk">
@@ -64,5 +63,14 @@ const getProfile = function() {
 </script>
 
 <style scoped>
-/* 스타일링 */
+.MovieCard {
+  transform: scale(0.9);
+  transition: transform 0.3s ease-in-out;
+  /* filter: brightness(0.5); */
+}
+
+.MovieCard:hover {
+  transform: scale(1);
+  filter: brightness(1.5);
+}
 </style>

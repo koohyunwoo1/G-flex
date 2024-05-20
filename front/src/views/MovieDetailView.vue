@@ -4,7 +4,7 @@
     <div v-if="movie" class="movie-container">
       <img class="movie-poster" :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
       <div class="movie-info">
-        <p style="font-size: 50px;">제목 : {{ movie.title }}
+        <p style="font-size: 50px;">{{ movie.title }}
           <label style="font-size: 15px; margin:0px;" @click="handleLikeClick">
             ❤️ 
             좋아요 : {{ likeCount }}
@@ -21,7 +21,7 @@
       
       <div class="like-comments-section">
         <div class="comment-input">
-          <textarea v-model="newCommentContent" placeholder="댓글을 입력하세요" @keyup.enter="createCommentOnEnter"></textarea>
+          <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter"></textarea>
           <button @click="createComment">댓글 작성</button>
         </div>
       </div>
@@ -254,6 +254,7 @@ label {
   border-radius: 15px;
   border: solid 1px gray;
 }
+
 
 textarea {
   padding-top: 8px;
