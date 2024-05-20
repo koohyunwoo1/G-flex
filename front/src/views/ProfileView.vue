@@ -9,9 +9,9 @@
         <p>좋아하는 영화가 없습니다.</p>
       </div>
       <div v-else>
-        <div v-for="movie in likedMovies" :key="movie.id">
-          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-poster">
-        </div>
+        <span v-for="movie in likedMovies" :key="movie.id" style="margin-left: 20px;">
+          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" style="width: 400px;">
+        </span>
       </div>
     </div>
 
