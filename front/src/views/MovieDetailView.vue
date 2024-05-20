@@ -1,24 +1,31 @@
 <template>
   <div>
 
-    <div v-if="movie">
-      <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-      <p style="font-size: 50px; margin:0px" @click="handleLikeClick">
-        ❤️ {{ likeCount }}
-      </p>
-      <p>제목 : {{ movie.title }}</p>
-      <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
-      <p>줄거리 : {{ movie.overview }}</p>
-      <p>상영시간 : {{ movie.runtime }}분</p>
-      <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
+    <div v-if="movie" class="movie-container">
+      <img class="movie-poster" :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
+      <div class="movie-info">
+        <p style="font-size: 50px;">제목 : {{ movie.title }}
+          <label style="font-size: 15px; margin:0px;" @click="handleLikeClick">
+            ❤️ 
+            좋아요 : {{ likeCount }}
+          </label>
+        </p>
+        <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
+        <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
+        <p>상영시간 : {{ movie.runtime }}분</p>
+        <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
+      </div>
     </div>
-    <p v-else>No movies available</p>
     
-    <div>
-      <textarea v-model="newCommentContent" placeholder="댓글을 입력하세요" @keyup.enter="createCommentOnEnter"></textarea>
-      <button @click="createComment">댓글 작성</button>
-    </div>
-
+      <p v-else>No movies available</p>
+      
+      <div class="like-comments-section">
+        <div class="comment-input">
+          <textarea v-model="newCommentContent" placeholder="댓글을 입력하세요" @keyup.enter="createCommentOnEnter"></textarea>
+          <button @click="createComment">댓글 작성</button>
+        </div>
+      </div>
+      
     <div v-if="comments.length > 0">
       <ul>
         <li v-for="comment in comments" :key="comment.pk">
@@ -205,10 +212,60 @@ const createCommentOnEnter = (event) => {
 onMounted(() => {
   movies_information()
   fetchComments()
-  // toggleLike()
+
   
 })
 </script>
 
 <style scoped>
+.movie-container {
+  margin-left: 250px;
+  margin-right: 250px;
+  margin-top: 40px;
+  display: flex;
+  align-items: flex-start; 
+}
+
+.movie-poster {
+  width: 500px; 
+  margin-right: 20px; 
+  margin-left: 20px;
+}
+
+.movie-info {
+  flex: 1; 
+  font-size: 20px;
+}
+
+
+.like-comments-section {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.comment-input button {
+  margin-top: 30px;
+}
+
+label {
+  padding: 8px 16px;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 15px;
+  border: solid 1px gray;
+}
+
+textarea {
+  padding-top: 8px;
+  width: 300px;
+  height: 25px;
+  font-size: 18px;
+  border-radius: 10px;
+  resize: none;
+  color: black;
+  border: none;
+  border-bottom: 2px solid #0000007e;
+  outline: none;
+  margin-left: 250px;
+}
 </style>
