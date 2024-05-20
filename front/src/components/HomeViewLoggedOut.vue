@@ -5,14 +5,14 @@
           <h4>Christopher Nolan</h4>
       </div>
       <div>
-          <h3>G-Flex is a service that recommends movies automatically according to the user's preferred genres and moods.</h3>
+          <h3 style="font-size: 20px;">G-Flex is a service that recommends movies automatically according to the user's preferred genres and moods.</h3>
       </div>
       <div>
-          <h3>Made by </h3>
-          <h3>Hyunwoo Koo and Gootea Kim</h3>
+          <!-- <h3>Made by </h3> -->
+          <h3 style="font-size: 15px;">Made by Hyunwoo Koo and Gootea Kim</h3>
       </div>
       <div>
-          <h3>SSAFY 11th, Busan 1st class</h3>
+          <h3 style="font-size: 15px;">SSAFY 11th, Busan 1st class</h3>
       </div>
       <div>
           <h4>Busan, Republic of Korea</h4>
@@ -29,7 +29,7 @@
 }
 .container {
     text-align: center;
-    margin-top: 200px;
+    margin-top: 250px;
     font-family: Arial, sans-serif;
 }
 
