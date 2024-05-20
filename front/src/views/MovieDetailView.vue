@@ -26,7 +26,7 @@
         </div>
       </div>
       
-    <div v-if="comments.length > 0">
+    <div v-if="comments.length > 0" >
       <ul>
         <li v-for="comment in comments" :key="comment.pk">
           <p>{{ comment.user.username }}: {{ comment.content }}</p>
