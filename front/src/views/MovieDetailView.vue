@@ -2,12 +2,15 @@
   <div>
 
     <div v-if="movie">
-        <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-        <p>제목 : {{ movie.title }}</p>
-        <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
-        <p>줄거리 : {{ movie.overview }}</p>
-        <p>상영시간 : {{ movie.runtime }}분</p>
-        <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
+      <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
+      <p style="font-size: 50px; margin:0px" @click="handleLikeClick">
+        ❤️ {{ likeCount }}
+      </p>
+      <p>제목 : {{ movie.title }}</p>
+      <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
+      <p>줄거리 : {{ movie.overview }}</p>
+      <p>상영시간 : {{ movie.runtime }}분</p>
+      <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
     </div>
     <p v-else>No movies available</p>
     
@@ -52,6 +55,35 @@ const newCommentContent = ref('')
 const editedCommentId = ref(null) // 현재 수정 중인 댓글의 ID
 const editedCommentContent = ref('') // 수정할 댓글의 내용
 
+const isLiked = ref(false) // 좋아요 상태
+const likeCount = ref(0) // 좋아요 수
+
+const handleLikeClick = function() {
+  if (!isLiked.value) { // 이미 좋아요를 눌렀으면 무시
+    toggleLike();
+  }
+}
+
+
+const toggleLike = function() {
+  axios({
+    method: 'post',
+    url: `${store.API_URL}/api/v1/movies/${movieId}/like/`,
+    headers: {
+      Authorization: `Token ${store.token}`
+    }
+  })
+  .then((response) => {
+    isLiked.value = response.data.is_liked;
+    likeCount.value = response.data.like_users.length;
+    // console.log(likeCount);
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+
 const movies_information = function() {
   axios({
     method:'get',
@@ -62,6 +94,8 @@ const movies_information = function() {
   })
   .then((response) => {
     movie.value = response.data
+    // isLiked.value = response.data.like_users.includes(store.user.pk);
+    likeCount.value = response.data.like_users.length;
   })
   .catch((error) => {
     console.log(error)
@@ -171,6 +205,8 @@ const createCommentOnEnter = (event) => {
 onMounted(() => {
   movies_information()
   fetchComments()
+  // toggleLike()
+  
 })
 </script>
 
