@@ -65,12 +65,14 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMovieStore } from '@/stores/movie'
 
+
 const movies = ref(null)
 const exactMatches = ref([])
 const recommendedMovies = ref([])
 const store = useMovieStore()
 const router = useRouter()
 const searchTerm = ref('')
+
 
 const search = async () => {
   if (searchTerm.value.trim() !== '') {

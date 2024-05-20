@@ -213,6 +213,7 @@ def serach(lst, keyword):
         tmp['similarity'] = jaro_winkler_similarity(keyword, data['title'])
         fetch_data.append(tmp)
     fetch_data.sort(key=lambda x : -x['similarity'])
+    print(fetch_data[0])
     return fetch_data
 
 # 장르
@@ -243,3 +244,7 @@ def mood_list(request):
     serializer = MoodListSerializer(moods, many=True)
 
     return Response(serializer.data)
+
+
+
+        
