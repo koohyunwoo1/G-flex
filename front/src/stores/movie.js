@@ -96,6 +96,8 @@ export const useMovieStore = defineStore('Movie', () => {
     })
     .then((response) => {
       movie.value = response.data
+      isLiked.value = response.data.like_users.includes(store.user.pk);
+      likeCount.value = response.data.like_users.length;
     })
     .catch((error) => {
       console.log(error)
