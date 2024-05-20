@@ -1,5 +1,14 @@
 <template>
   <div>
+
+    <div class="profile-container">
+      <div class="profile-header">
+        <div>
+          <h2>{{ store.logIn_username }}님의 프로필</h2>
+        </div>
+      </div>
+    </div>
+
     <div style="margin: 100px;">
       <h3>{{ store.logIn_username }}님께서 좋아하시는 영화 !</h3>
       <div v-if="likedMovies.length === 0">
@@ -14,21 +23,11 @@
       </div>
     </div>
 
-    <div style="margin: 100px;">
-      <h3>{{ store.logIn_username }}님께서 최근 검색하신 영화 !</h3>
+    <!-- <div style="margin: 100px;">
+      <h3>{{ store.logIn_username }}님께서 댓글 작성하신 영화 !</h3>
       <ul>
-        <!-- 검색 결과를 표시
-        <li v-for="movie in exactMatches" :key="movie.pk">
-          <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
-            <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
-            <div class="movie-info">
-              <h2>{{ movie.title }}</h2>
-              영화 정보 추가
-            </div>
-          </RouterLink>
-        </li> -->
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -40,9 +39,12 @@ import { useMovieStore } from '@/stores/movie';
 const store = useMovieStore()
 
 const likedMovies = ref([])
+const comments = ref([])
+console.log(comments)
+
 
 onMounted(() => {
-  getProfile()
+  getProfile()  
 })
 
 const getProfile = function() {
@@ -60,6 +62,9 @@ const getProfile = function() {
     console.log(error)
   })
 }
+
+
+
 </script>
 
 <style scoped>
@@ -73,4 +78,20 @@ const getProfile = function() {
   transform: scale(1);
   filter: brightness(1.5);
 }
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-header {
+  width: auto;
+  border: solid 1px gray;
+  border-radius: 25px;
+  padding: 20px;
+  text-align: center;
+  font-family: fantasy
+}
+
 </style>

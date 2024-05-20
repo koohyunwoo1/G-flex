@@ -23,15 +23,17 @@
       <p v-else>No movies available</p>
     </div>
 
-      <div class="movie-img center">
+      <div class="movie-img center" style="margin-top: 250px;">
         <h3 v-if="exactMatches && exactMatches.length">검색 결과</h3>
         <div v-if="exactMatches && exactMatches.length" class="container-img">
           <div>
           </div>
           <div v-for="(movie, index) in exactMatches" :key="index" class="movie-item">
-            <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
-              <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
-            </RouterLink>
+            <div>
+              <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
+                <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
+              </RouterLink>
+            </div>
           </div>
         </div>
         <p v-else>No exact matches found</p>

@@ -1,9 +1,11 @@
 <template>
   <div>
+    <h1 style="text-align: center; font-family: fantasy; font-size: 50px">G-Flex</h1> 
 
     <div v-if="movie" class="movie-container">
       <img class="movie-poster" :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
       <div class="movie-info">
+        <hr>
         <p style="font-size: 50px;">{{ movie.title }}
           <label style="font-size: 15px; margin:0px;" @click="handleLikeClick">
             ❤️ 
@@ -14,6 +16,7 @@
         <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
         <p>상영시간 : {{ movie.runtime }}분</p>
         <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
+        <hr>
       </div>
     </div>
     
@@ -21,7 +24,7 @@
 
         <div class="like-comments-section">
           <div class="comment-input">
-            <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter"></textarea>
+            <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px;"></textarea>
             <button @click="createComment">댓글 작성</button>
           </div>
         </div>
@@ -229,12 +232,21 @@ onMounted(() => {
 }
 
 .movie-poster {
-  width: 500px; 
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
+  border-radius: 30px;
+  width: 400px; 
   margin-right: 20px; 
   margin-left: 20px;
 }
 
+.movie-poster:hover {
+  transform: scale(1.1);
+  filter: brightness(1.5);
+}
+
 .movie-info {
+  margin-left: 50px;
   flex: 1; 
   font-size: 20px;
 }
