@@ -17,7 +17,8 @@
       </div>
       <br>
       <div class="form-group">
-        <input type="submit" value="Sign Up" class="btn btn-primary">
+        <!-- <input type="submit" value="Sign Up" class="btn btn-primary"> -->
+        <input type="submit" value="Sign Up" class="btn btn-primary" style="background-color: transparent; border: 0.5px solid #87CEEB">
       </div>
     </form>
   </div>

@@ -3,10 +3,11 @@
     <h1 style="text-align: center;">{{ store.logIn_username }}님 안녕하세요 !</h1>
 
     <div class="container">
-      <div class="search-container">
+      <div class="search-container" style="text-align: center;">
         <input type="text" v-model="searchTerm" placeholder="영화를 한번 찾아보세요 !" class="search-input" @keyup.enter="createCommentOnEnter">
         <button @click="search" class="search-button">
-          <span role="img" aria-label="search" class="search-icon">🔍</span>
+          <p aria-label="search" class="search-icon">🔍</p>
+          <!-- <span role="img" aria-label="search" class="search-icon">🔍</span> -->
         </button>
       </div>
     </div>
@@ -161,7 +162,7 @@ h2 {
 }
 
 .h2 {
-  margin-top: 200px;
+  margin-top: 50px;
 }
 
 .container-img {
@@ -177,6 +178,9 @@ h2 {
   width: 350px;
   padding: 10px 20px;
   border-radius: 25px;
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center;
 }
 .search-input {
   background-color: #eee;
@@ -184,22 +188,22 @@ h2 {
   border-radius: 15px;
   padding: 12px 12px;
   margin-right: 10px;
-  width: 200px;
+  width: 300px;
 }
 
 .search-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center; /* Center icon vertically */
+  padding: 12px 12px; /* Match the padding of the input */
 }
 
 .search-icon {
-  font-size: 24px;
+  font-size: 30px;
+  margin-left: 10px;
 }
-
-
-
-
 
 
 
@@ -237,10 +241,6 @@ h2 {
   align-items: center; 
   flex-direction: column;
 }
-
-
-
-
 
 
 

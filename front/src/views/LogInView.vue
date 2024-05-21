@@ -1,17 +1,17 @@
 <template>
   <div class="login-container">
-    <h1>로그인 페이지</h1>
+    <h1>로그인</h1>
     <form @submit.prevent="logIn" class="login-form">
       <div class="form-group">
         <label for="username">아이디</label>
-        <input type="text" v-model.trim="username" id="username" class="form-control">
+        <input type="text" v-model.trim="username" placeholder="아이디를 입력해주세요." id="username" class="form-control">
       </div>
       <div class="form-group">
         <label for="password">비밀번호</label>
-        <input type="password" v-model.trim="password" id="password" class="form-control">
+        <input type="password" v-model.trim="password" placeholder="비밀번호를 입력해주세요." id="password" class="form-control">
       </div>
       <div class="form-group">
-        <input type="submit" value="로그인" class="btn btn-primary">
+        <input type="submit" value="로그인" class="btn btn-primary" style="background-color: transparent; border: 0.5px solid #87CEEB">
       </div>
     </form>
   </div>
