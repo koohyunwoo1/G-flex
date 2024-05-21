@@ -5,6 +5,9 @@ app_name = 'movies'
 
 urlpatterns = [
 
+    path('filter/', views.filter_movies_by_genre_and_mood, name='filter_movies_by_genre_and_mood'),
+
+
     # mood
     path('mood/', views.mood_list),
     path('mood/<int:mood_pk>/', views.mood_detail),

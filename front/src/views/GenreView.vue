@@ -102,25 +102,27 @@ const toggleMood = (moodPk) => {
 const fetchMovies = () => {
   if (selectedGenres.value.length === 0 && !selectedMood.value) return;
 
-  const genrePromises = selectedGenres.value.map(genrePk => {
-    return axios.get(`${store.API_URL}/api/v1/movies/genre/${genrePk}/`, {
-      headers: { Authorization: `Token ${store.token}` }
-    });
+  // 선택된 장르와 무드 PK를 query string으로 변환
+  const queryString = new URLSearchParams();
+  selectedGenres.value.forEach(genrePk => {
+    queryString.append('genre_pk', genrePk);
   });
+  if (selectedMood.value) {
+    queryString.append('mood_pk', selectedMood.value);
+  }
 
-  const moodPromise = selectedMood.value ? axios.get(`${store.API_URL}/api/v1/movies/mood/${selectedMood.value}/`, {
+  // API 호출 시 query string을 함께 전달
+  axios.get(`${store.API_URL}/api/v1/movies/filter/?${queryString.toString()}`, {
     headers: { Authorization: `Token ${store.token}` }
-  }) : null;
-
-  Promise.all([...genrePromises, moodPromise].filter(Boolean))
-    .then(responses => {
-      const mergedMovies = responses.flatMap(response => response.data.movies);
-      movies.value = mergedMovies;
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  })
+  .then(response => {
+    movies.value = response.data;
+  })
+  .catch(err => {
+    console.error(err);
+  });
 }
+
 
 genreslist()
 moodslist()
