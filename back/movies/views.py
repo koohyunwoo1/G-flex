@@ -255,18 +255,20 @@ def mood_detail(request, mood_pk):
 @api_view(['GET'])
 def filter_movies_by_genre_and_mood(request):
     selected_genre_pks = request.GET.getlist('genre_pk')
-    selected_mood_pk = request.GET.get('mood_pk')
+    selected_mood_pks = request.GET.getlist('mood_pk')
 
     movies = Movie.objects.all()
 
     # 선택된 장르와 무드에 따라 영화 필터링
     if selected_genre_pks:
-        # 두 개의 장르를 모두 포함하는 영화 필터링
+        # 모든 선택된 장르를 포함하는 영화 필터링
         for genre_pk in selected_genre_pks:
             movies = movies.filter(genres__pk=genre_pk)
     
-    if selected_mood_pk:
-        movies = movies.filter(mood_tags__pk=selected_mood_pk)
+    if selected_mood_pks:
+        # 모든 선택된 무드를 포함하는 영화 필터링
+        for mood_pk in selected_mood_pks:
+            movies = movies.filter(moodtag__pk=mood_pk)
 
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)

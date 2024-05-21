@@ -18,7 +18,7 @@
     <div>
       <div v-if="moods">
         <span v-for="(mood, index) in moods" :key="index">
-          <label :class="{ 'selected': selectedMood === mood.pk}" @click="toggleMood(mood.pk)">
+          <label :class="{ 'selected': selectedMoods.includes(mood.pk)}" @click="toggleMood(mood.pk)">
             {{ mood.name }}
           </label>
         </span>
@@ -29,7 +29,7 @@
 
   <div>
     <div class="button-container">
-      <button class="button" @click="fetchMovies" :disabled="selectedGenres.length === 0 && !selectedMood">Go</button>
+      <button class="button" @click="fetchMovies" :disabled="selectedGenres.length === 0 && selectedMoods.length === 0">Go</button>
     </div>
   </div>
 
@@ -57,7 +57,7 @@ const genres = ref([])
 const selectedGenres = ref([])
 
 const moods = ref([])
-const selectedMood = ref(null)
+const selectedMoods = ref([])
 
 const genreslist = () => {
   axios.get(`${store.API_URL}/api/v1/movies/genre/`, {
@@ -92,24 +92,24 @@ const selectGenre = (genrePk) => {
 }
 
 const toggleMood = (moodPk) => {
-  if (selectedMood.value === moodPk) {
-    selectedMood.value = null; // Deselect if already selected
-  } else {
-    selectedMood.value = moodPk;
+  if (selectedMoods.value.includes(moodPk)) {
+    selectedMoods.value = selectedMoods.value.filter(pk => pk !== moodPk);
+  } else if (selectedMoods.value.length < 2) {
+    selectedMoods.value.push(moodPk);
   }
 }
 
 const fetchMovies = () => {
-  if (selectedGenres.value.length === 0 && !selectedMood.value) return;
+  if (selectedGenres.value.length === 0 && selectedMoods.value.length === 0) return;
 
   // 선택된 장르와 무드 PK를 query string으로 변환
   const queryString = new URLSearchParams();
   selectedGenres.value.forEach(genrePk => {
     queryString.append('genre_pk', genrePk);
   });
-  if (selectedMood.value) {
-    queryString.append('mood_pk', selectedMood.value);
-  }
+  selectedMoods.value.forEach(moodPk => {
+    queryString.append('mood_pk', moodPk);
+  });
 
   // API 호출 시 query string을 함께 전달
   axios.get(`${store.API_URL}/api/v1/movies/filter/?${queryString.toString()}`, {
@@ -117,12 +117,14 @@ const fetchMovies = () => {
   })
   .then(response => {
     movies.value = response.data;
+    // 태그 초기화
+    selectedGenres.value = [];
+    selectedMoods.value = [];
   })
   .catch(err => {
     console.error(err);
   });
 }
-
 
 genreslist()
 moodslist()
