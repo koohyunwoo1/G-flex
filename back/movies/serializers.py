@@ -13,18 +13,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('pk', 'nickname', 'id')
 
-# 로그인 후 맨 처음 페이지에 인기순으로 3개의 영화를 나타내기 위한 seri~
-
-# vote_average 이게 평점임
+# 로그인 후 맨 처음 페이지에 인기순으로 3개의 영화를 나타내기 위한 serializer, vote_average === 평점
 
 class MovieHomeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
         fields = ('title', 'vote_average', 'overview', 'poster_path', 'pk', 'id')
-        # 출력할 필드는 제목과 평점만
-
-
+        
 # 사용자가 좋아요 누른 영화
         
 class UserLikeMovieListSerializer(serializers.ModelSerializer):
@@ -39,7 +35,6 @@ class UserLikeMovieListSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('pk', 'username', 'like_movies',)
-
 
 # 검색한 영화와 비슷한 영화
 
@@ -89,8 +84,9 @@ class MovieDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         exclude = ('popularity', 'tagline', 'vote_average', 'vote_count', 'words',)
-        # fields = '__all__'
+
 # movie 관련 serializer 완
+
 
 # 댓글 관련 serializer
 
@@ -156,25 +152,4 @@ class MoodListSerializer(serializers.ModelSerializer):
         fields = ('name', 'pk') 
 
 # 무드 관련 serializer 완
-        
 
-# 배우 목록 정보
-# class ActorListSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Actor
-#         fields = '__all__'
-
-# 단일 배우 detail 정보
-        
-# class ActorDetailSerializer(serializers.ModelSerializer):
-
-#     class MovieSerializer(serializers.ModelSerializer):
-#         class Meta:
-#             model = Movie
-#             fields = ('title', 'poster_path',)
-    
-#     movie = MovieSerializer(many=True, read_only=True)
-
-#     class Meta:
-#         model = Actor
-#         fields = ('name', 'movies')
