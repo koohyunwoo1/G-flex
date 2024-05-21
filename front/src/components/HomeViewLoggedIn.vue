@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ store.logIn_username }}님 안녕하세요 !</h1>
+    <h1 style="text-align: center;">{{ store.logIn_username }}님 안녕하세요 !</h1>
 
     <div class="container">
       <div class="search-container">
@@ -11,48 +11,45 @@
       </div>
     </div>
 
-    <h1 class="h1">G-Flex가 추천드리는 영화</h1>
-    <div class="movie-img">
-      <div v-if="movies && movies.length" class="container-img">
-        <div v-for="(movie, index) in movies" :key="index" class="movie-item">
-          <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.id }}">
-            <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
-          </RouterLink>
-        </div>
-      </div>
-      <p v-else>No movies available</p>
-    </div>
-
-      <div class="movie-img center" style="margin-top: 250px;">
-        <h3 v-if="exactMatches && exactMatches.length">검색 결과</h3>
-        <div v-if="exactMatches && exactMatches.length" class="container-img">
-          <div>
+      <h2 class="h2">G-Flex가 추천드리는 영화</h2>
+      <Carousel :itemsToShow="5.3" :wrapAround="true" :autoplay="1500">
+        <Slide v-for="movie in movies" :key="movie.id">
+          <div class="carousel__slide">
+            <div class="movie-img">
+              <div class="movie-item">
+                <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.id }}">
+                  <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
+                </RouterLink>
+              </div>
+            </div>
           </div>
-          <div v-for="(movie, index) in exactMatches" :key="index" class="movie-item">
-            <div>
-              <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
-                <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
-              </RouterLink>
+        </Slide>
+      </Carousel>
+
+        <div class="center" style="margin-top: 250px;">
+          <h3 v-if="exactMatches && exactMatches.length">검색 결과</h3>
+            <div v-if="exactMatches && exactMatches.length" class="container-img">
+              <div v-for="(movie, index) in exactMatches" :key="index" class="movie-item">
+                <div>
+                  <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
+                    <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image2">
+                  </RouterLink>
+              </div>
             </div>
           </div>
         </div>
-        <p v-else>No exact matches found</p>
-      </div>
-
-      <div class="movie-img center">
-        <h3 v-if="recommendedMovies && recommendedMovies.length">비슷한 작품</h3>
-        <div v-if="recommendedMovies && recommendedMovies.length" class="container-img">
-          <div>
-          </div>
-          <div v-for="(movie, index) in recommendedMovies" :key="index" class="movie-item">
-            <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
-              <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image">
-            </RouterLink>
+      
+        <div class="center">
+          <h3 v-if="recommendedMovies && recommendedMovies.length">비슷한 작품</h3>
+            <div v-if="recommendedMovies && recommendedMovies.length" class="container-img">
+              <div v-for="(movie, index) in recommendedMovies" :key="index" class="movie-item">
+                <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
+                  <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image2">
+                </RouterLink>
+            </div>
           </div>
         </div>
-        <p v-else>No recommendati1ns available</p>
-      </div>
-      
+        
     <RouterView />
   </div>
 </template>
@@ -63,6 +60,20 @@ import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMovieStore } from '@/stores/movie'
+import { defineComponent } from 'vue'
+import { Carousel, Pagination, Slide } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
+
+
+
+defineComponent({
+  name: 'Autoplay',
+  components: {
+    Carousel,
+    Slide,
+    Pagination,
+  },
+})
 
 
 const movies = ref(null)
@@ -127,11 +138,11 @@ onMounted(() => {
   justify-content: center;
 }
 
-h1 {
+h2 {
   text-align: center;
 }
 
-.h1 {
+.h2 {
   margin-top: 200px;
 }
 
@@ -149,7 +160,6 @@ h1 {
   padding: 10px 20px;
   border-radius: 25px;
 }
-
 .search-input {
   background-color: #eee;
   border: none;
@@ -168,6 +178,12 @@ h1 {
 .search-icon {
   font-size: 24px;
 }
+
+
+
+
+
+
 
 .movie-img {
   display: flex;
@@ -190,20 +206,33 @@ h1 {
 
 .movie-image {
   width: 400px;
+  border-radius: 15px;
 }
 
+.movie-image2 {
+  width: 300px;
+  border-radius: 15px;
+}
 .center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
   flex-direction: column;
 }
 
-h3 {
-  background-color: #80CEE1;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 15px;
-  border: solid 1px gray;
+
+
+
+
+
+
+.carousel__slide {
+  opacity: 0.9;
+  transform: rotateY(-1deg) scale(0.9);
 }
+.carousel__slide--active {
+  opacity: 1;
+  transform: rotateY(0) scale(1.1);
+}
+
 </style>

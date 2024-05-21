@@ -10,7 +10,7 @@
     </div>
 
     <div style="margin: 100px;">
-      <h3>{{ store.logIn_username }}님께서 좋아하시는 영화 !</h3>
+      <h3 style="margin-left: 50px;">{{ store.logIn_username }}님께서 좋아하시는 영화 !</h3>
       <div v-if="likedMovies.length === 0">
         <p>좋아하는 영화가 없습니다.</p>
       </div>
@@ -81,8 +81,10 @@ const getProfile = function() {
 
 .profile-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
+  margin-left: 150px;
+  margin-top: 80px;
 }
 
 .profile-header {
@@ -91,7 +93,6 @@ const getProfile = function() {
   border-radius: 25px;
   padding: 20px;
   text-align: center;
-  font-family: fantasy
 }
 
 </style>

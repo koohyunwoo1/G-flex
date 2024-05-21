@@ -69,7 +69,7 @@ const signUp = function() {
 .form-group label {
   display: block;
   margin-bottom: 5px;
-  color: orange;
+  color: #87CEEB;
 }
 
 .form-control {
@@ -92,11 +92,11 @@ const signUp = function() {
   font-size: 16px;
   cursor: pointer;
   text-align: center;
-  background-color: orange;
+  background-color: #87CEEB;
 }
 
 .btn:hover {
-  background-color: red;
+  background-color: #80d6ff;
 }
 
 </style>

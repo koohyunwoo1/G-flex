@@ -1,11 +1,16 @@
 <template>
   <div>
-    <div class="image-container">
-      <img src="/assets/404_2.png" alt="img">
-    </div>
     <h1>검색 결과가 없습니다.</h1>
-    <p>다른 검색어로 다시 시도해주세요.</p>
+    <p class="p">다른 검색어로 다시 시도해주세요.</p>
     <RouterLink to="/">홈으로 돌아가기</RouterLink>
+    <div style="text-align: center; margin-top: 50px;">
+      <p>인기 있는 검색어를 추천해드릴게요.</p>
+      <p>가디언즈 오브 갤럭시</p>
+      <p>어벤져스: 엔드게임</p> 
+      <p>어벤져스</p>
+      <p>범죄도시</p>
+      <p></p>
+    </div>
   </div>
 </template>
 
@@ -14,9 +19,14 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <style scoped>
-h1, p {
+h1{
   text-align: center;
-  margin-top: 20px;
+  margin-top: 150px;
+}
+
+.p {
+  margin-top: 50px;
+  text-align: center;
 }
 
 a {
@@ -29,14 +39,5 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-.image-container {
-  display: flex;
-  justify-content: center;
-}
-
-img {
-  width: 600px;
 }
 </style>
