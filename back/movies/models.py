@@ -2,25 +2,29 @@ from django.db import models
 from django.conf import settings
 import datetime
 
+# 배우
 class Actor(models.Model):
     name = models.CharField(max_length=30, null=False)
     profile_path = models.TextField(null=True)
     
     def __str__(self):
         return self.name
-    
+
+# 장르
 class Genre(models.Model):
     name = models.CharField(max_length=30, null=False)
 
     def __str__(self):
         return self.name
-    
+
+# 무드 태그
 class MoodTag(models.Model):
     name = models.CharField(max_length=30, null=False)
     
     def __str__(self):
         return self.name
-    
+
+# 영화
 class Movie(models.Model):
     genres = models.ManyToManyField(Genre, related_name='movies')
     moodtag = models.ManyToManyField(MoodTag, related_name='movies')
@@ -43,6 +47,7 @@ class Movie(models.Model):
         return self.title
 
 
+# 댓글
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='comments')
