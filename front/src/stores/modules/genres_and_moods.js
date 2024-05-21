@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
@@ -8,6 +8,7 @@ export const useMovieStore = defineStore('Movie', () => {
   const token = ref(null)
 
   const genres = ref([])
+  const moods = ref([])
 
   const genretags = function() {
     axios({
@@ -24,8 +25,6 @@ export const useMovieStore = defineStore('Movie', () => {
       console.log(err);
     })
   }
-
-  const moods = ref([])
 
   const moodtags = function() {
     axios({

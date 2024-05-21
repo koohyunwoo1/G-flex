@@ -131,6 +131,30 @@ class GenreListSerializer(serializers.ModelSerializer):
         fields = ('name', 'pk',)
 
 # 장르 관련 serializer 완
+
+# Mood 태그 상세 정보
+
+class MoodTagSerializer(serializers.ModelSerializer):
+
+    class MovieSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Movie
+            fields = ('title', 'poster_path', 'tagline',)
+
+    movies = MovieSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = MoodTag
+        fields = '__all__'
+
+# Mood 전체 태그 가져오기
+class MoodListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MoodTag
+        fields = ('name', 'pk') 
+
+# 무드 관련 serializer 완
         
 
 # 배우 목록 정보
@@ -153,27 +177,3 @@ class GenreListSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Actor
 #         fields = ('name', 'movies')
-
-# Mood 태그 상세 정보
-
-class MoodTagSerializer(serializers.ModelSerializer):
-
-    class MovieSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Movie
-            fields = ('title', 'poster_path', 'tagline',)
-
-    movies = MovieSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = MoodTag
-        fields = '__all__'
-
-# Mood 전체 태그 가져오기
-class MoodListSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = MoodTag
-        fields = '__all__'
-
-# 무드 관련 serializer 완

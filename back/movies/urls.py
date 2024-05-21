@@ -7,6 +7,7 @@ urlpatterns = [
 
     # mood
     path('mood/', views.mood_list),
+    path('mood/<int:mood_pk>/', views.mood_detail),
 
     # genre
 
