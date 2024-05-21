@@ -32,18 +32,29 @@
       <button class="button" @click="fetchMovies" :disabled="selectedGenres.length === 0 && selectedMoods.length === 0">Go</button>
     </div>
   </div>
+  
 
-  <div v-if="movies.length">
-    <h2 style="margin-left: 50px;">선택된 장르 또는 무드의 영화</h2>
-    <div class="movie-img">
-      <div v-for="(movie, index) in movies.slice(0, 5)" :key="index" class="movie-item">
-        <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
-          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image"/>
-        </RouterLink>
+  <div>
+    <div v-if="movies.length">
+      <h2 style="margin-left: 50px;">선택된 장르 또는 무드의 영화</h2>
+      <div class="movie-img">
+        <div v-for="(movie, index) in movies.slice(0, 5)" :key="index" class="movie-item">
+          <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
+            <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image"/>
+          </RouterLink>
+        </div>
       </div>
     </div>
+
+
+    <div v-if="showNoMoviesMessage">
+      <div style="margin-left: 50px;">
+        <h3>선택하신 장르나 무드에 해당하는 영화를 찾지 못하였습니다.</h3>
+      </div>
+    </div>    
   </div>
-  <RouterView/>
+  
+  <RouterView/> 
 </template>
 
 <script setup>
@@ -61,6 +72,9 @@ const selectedGenres = ref([])
 
 const moods = ref([])
 const selectedMoods = ref([])
+
+// Go 버튼을 클릭하여 영화를 검색하고 나서 메시지를 표시할지 여부를 나타내는 변수
+const showNoMoviesMessage = ref(false)
 
 const genreslist = () => {
   axios.get(`${store.API_URL}/api/v1/movies/genre/`, {
@@ -120,6 +134,8 @@ const fetchMovies = () => {
   })
   .then(response => {
     movies.value = response.data;
+    // 검색 결과가 없을 경우 메시지 표시
+    showNoMoviesMessage.value = movies.value.length === 0;
     // 태그 초기화
     selectedGenres.value = [];
     selectedMoods.value = [];
