@@ -245,6 +245,10 @@ def mood_list(request):
 
     return Response(serializer.data)
 
+@api_view(['GET'])
+def mood_detail(request, mood_pk):
 
-
+    mood = get_object_or_404(MoodTag, pk=mood_pk)
+    serializer = MoodTagSerializer(mood)
+    return Response(serializer.data)
         
