@@ -147,7 +147,8 @@ label {
 }
 
 .container {
-  margin-top: 100px;
+  margin-left: 50px;
+  margin-top: 150px;
 }
 
 .button-container {

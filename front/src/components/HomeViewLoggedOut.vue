@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-      <h1>Movies bring our adventures to life.</h1>
+      <h1 style="font-size: 60px;">Movies bring our adventures to life.</h1>
       <div class="g">
           <h4>Christopher Nolan</h4>
       </div>
       <div>
-          <h3 style="font-size: 20px;">G-Flex is a service that recommends movies automatically according to the user's preferred genres and moods.</h3>
+          <h3 style="font-size: 25px;">G-Flex is a service that recommends movies automatically according to the user's preferred genres and moods.</h3>
       </div>
       <div>
           <!-- <h3>Made by </h3> -->
-          <h3 style="font-size: 15px;">Made by Hyunwoo Koo and Gootea Kim</h3>
+          <h3 style="font-size: 20px;">Made by Hyunwoo Koo and Gootea Kim</h3>
       </div>
       <div>
-          <h3 style="font-size: 15px;">SSAFY 11th, Busan 1st class</h3>
+          <h3 style="font-size: 20px;">SSAFY 11th, Busan 1st class</h3>
       </div>
       <div>
           <h4>Busan, Republic of Korea</h4>

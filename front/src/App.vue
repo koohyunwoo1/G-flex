@@ -40,7 +40,7 @@
           </RouterLink> 
         </template>
         <RouterLink :to="{ name: 'ProfileView' }">
-          <button  v-if="store.isLogin">
+          <button  v-if="store.isLogin" style="margin-right: 30px;">
             <b>
               마이페이지
             </b>
@@ -77,6 +77,7 @@ const logOut = function() {
 
 body {
   background-image: url('assets/back_img10.jpg');
+  /* background-image: url('assets/김구태 증명사진.jpg'); */
   background-size: cover;
   background-attachment: fixed;
   color: #ffffff;
