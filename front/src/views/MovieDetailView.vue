@@ -1,51 +1,57 @@
 <template>
   <div>
-    <h1 style="text-align: center; font-family: fantasy; font-size: 50px">G-Flex</h1> 
+    <!-- <h1 style="text-align: center; font-family: fantasy; font-size: 50px">G-Flex</h1>  -->
 
     <div v-if="movie" class="movie-container">
       <img class="movie-poster" :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-      <div class="movie-info">
-        <hr>
-        <p style="font-size: 50px;">{{ movie.title }}
-          <label style="font-size: 15px; margin:0px;" @click="handleLikeClick">
-            ❤️ 
-            좋아요 : {{ likeCount }}
-          </label>
-        </p>
-        <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
-        <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
-        <p>상영시간 : {{ movie.runtime }}분</p>
-        <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
-        <hr>
-      </div>
-    </div>
-    
-      <p v-else>No movies available</p>
-
-        <div class="like-comments-section">
-          <div class="comment-input">
-            <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px;"></textarea>
-            <button @click="createComment">댓글 작성</button>
-          </div>
-        </div>
+        <div class="movie-info">
+          <hr>
+          <p style="font-size: 50px;">{{ movie.title }}
+            <label style="font-size: 15px; margin:0px;" @click="handleLikeClick">
+              ❤️ 
+              좋아요 : {{ likeCount }}
+            </label>
+          </p>
+          <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
+          <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
+          <p>상영시간 : {{ movie.runtime }}분</p>
+          <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
+          <hr>
         
-        <div v-if="comments.length > 0">
-          <ul>
-            <li v-for="comment in comments" :key="comment.pk" style="margin-left: 250px;">
-              <p>{{ comment.user.username }}: {{ comment.content }}</p>
-              <template v-if="comment.pk !== editedCommentId">
-                <button @click="deleteComment(comment.pk)">삭제</button>
-                <button @click="toggleEdit(comment)">수정</button>
-              </template>
-              <div v-if="comment.pk === editedCommentId">
-                <textarea v-model="editedCommentContent"></textarea>
-                <button @click="updateComment">수정 완료</button>
-                <button @click="cancelEdit">취소</button>
+          <div class="like-comments-section">
+            <div class="comment-input">
+              <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px; padding-left: 15px;"></textarea>
+              <button @click="createComment">댓글 작성</button>
+            </div>
+          </div>
+        
+          <div v-if="comments.length > 0">
+            <ul>
+              <li v-for="comment in comments" :key="comment.pk">
+                <p>{{ comment.user.username }}: {{ comment.content }}</p>
+
+                <template v-if="comment.pk !== editedCommentId">
+                  <button @click="deleteComment(comment.pk)">삭제</button>
+                  <button @click="toggleEdit(comment)">수정</button>
+                </template>
+
+                <div v-if="comment.pk === editedCommentId">
+                  <textarea v-model="editedCommentContent"></textarea>
+                  <button @click="updateComment">수정 완료</button>
+                  <button @click="cancelEdit">취소</button>
               </div>
             </li>
           </ul>
         </div>
+
+
+
       </div>
+    </div>
+
+    <p v-else>No movies available</p>
+    
+  </div>
 
 
 </template>
@@ -253,7 +259,7 @@ onMounted(() => {
 
 
 .like-comments-section {
-  margin-left: 30px;
+  /* margin-left: 30px; */
   margin-top: 20px;
 }
 
@@ -281,6 +287,6 @@ textarea {
   border: none;
   border-bottom: 2px solid #0000007e;
   outline: none;
-  margin-left: 250px;
+  /* margin-left: 250px; */
 }
 </style>
