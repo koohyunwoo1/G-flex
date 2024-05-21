@@ -57,7 +57,7 @@ class MovieListSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Movie
-        fields = ('pk', 'words', 'poster_path','title')
+        fields = ('pk', 'words', 'poster_path','title', 'moodtag', 'genres')
     
 # 사용자가 선택 또는 좋아요 한 영화와 비슷한 영화
         
