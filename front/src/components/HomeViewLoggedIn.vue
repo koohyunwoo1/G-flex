@@ -12,7 +12,7 @@
     </div>
 
       <h2 class="h2">G-Flex가 추천드리는 영화</h2>
-      <Carousel :itemsToShow="5.3" :wrapAround="true" :autoplay="1500">
+      <Carousel :itemsToShow="5.3" :wrapAround="true" :autoplay="2500">
         <Slide v-for="movie in movies" :key="movie.id">
           <div class="carousel__slide">
             <div class="movie-img">
@@ -25,20 +25,20 @@
           </div>
         </Slide>
       </Carousel>
-
+        
         <div class="center" style="margin-top: 250px;">
           <h3 v-if="exactMatches && exactMatches.length">검색 결과</h3>
-            <div v-if="exactMatches && exactMatches.length" class="container-img">
-              <div v-for="(movie, index) in exactMatches" :key="index" class="movie-item">
-                <div>
-                  <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
-                    <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image2">
-                  </RouterLink>
+          <div v-if="exactMatches && exactMatches.length" class="container-img">
+            <div v-for="(movie, index) in exactMatches" :key="index" class="movie-item">
+              <div>
+                <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
+                  <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image2">
+                </RouterLink>
               </div>
             </div>
           </div>
         </div>
-      
+        
         <div class="center">
           <h3 v-if="recommendedMovies && recommendedMovies.length">비슷한 작품</h3>
             <div v-if="recommendedMovies && recommendedMovies.length" class="container-img">
@@ -92,11 +92,11 @@ const search = async () => {
           Authorization: `Token ${store.token}`
         }
       });
-
+      
       const allResults = response.data
       exactMatches.value = allResults.filter(movie => movie.title.includes(searchTerm.value))
       recommendedMovies.value = allResults.filter(movie => !movie.title.includes(searchTerm.value))
-
+      
       if (exactMatches.value.length === 0) {
         router.push({ name: 'NotFoundView' })
       } else {
@@ -106,6 +106,8 @@ const search = async () => {
         } else {
           console.log('No recommendations available.')
         }
+        scrollExactMatchesIntoView()
+        
       }
     } catch (error) {
       console.error('Error occurred while searching:', error)
@@ -114,7 +116,7 @@ const search = async () => {
 }
 
 const homemovies = async () => {
-  try {
+  try { 
     const response = await axios.get(`${store.API_URL}/api/v1/movies/`, {
       headers: {
         Authorization: `Token ${store.token}`
@@ -126,9 +128,6 @@ const homemovies = async () => {
   }
 };
 
-onMounted(() => {
-  homemovies()
-});
 
 
 const createCommentOnEnter = (event) => {
@@ -136,6 +135,18 @@ const createCommentOnEnter = (event) => {
     search();
   }
 }
+
+
+const scrollExactMatchesIntoView = () => {
+  const centerElement = document.querySelector('.container-img');
+  if (centerElement) {
+    centerElement.scrollIntoView({ behavior: 'smooth'});
+  }
+}
+
+onMounted(() => {
+  homemovies()
+});
 
 </script>
 
