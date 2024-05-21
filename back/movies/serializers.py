@@ -29,6 +29,7 @@ class MovieHomeSerializer(serializers.ModelSerializer):
         
 class UserLikeMovieListSerializer(serializers.ModelSerializer):
     class MovieSerializer(serializers.ModelSerializer):
+
         class Meta:
             model = Movie
             fields = ('pk', 'words',)
@@ -56,7 +57,7 @@ class MovieListSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Movie
-        fields = ('pk', 'words')
+        fields = ('pk', 'words', 'poster_path','title')
     
 # 사용자가 선택 또는 좋아요 한 영화와 비슷한 영화
         
