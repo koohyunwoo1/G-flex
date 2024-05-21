@@ -77,7 +77,6 @@ const logOut = function() {
 
 body {
   background-image: url('assets/back_img10.jpg');
-  /* background-image: url('assets/김구태 증명사진.jpg'); */
   background-size: cover;
   background-attachment: fixed;
   color: #ffffff;

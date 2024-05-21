@@ -3,11 +3,9 @@ import HomeView from '@/views/HomeView.vue'
 import LogInView from '@/views/LogInView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import ProfileView from '@/views/ProfileView.vue'
-// import SearchView from '@/views/SearchView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import MovieDetailView from '@/views/MovieDetailView.vue'
 import GenreView from '@/views/GenreView.vue'
-import GenreSearchView from '@/views/GenreSearchView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,12 +46,6 @@ const router = createRouter({
       name: 'GenreView',
       component: GenreView
     },
-    {
-      path: '/genresearch',
-      name: 'GenreSearchView',
-      component: GenreSearchView
-    },
-
   ]
 })
 
@@ -64,11 +56,9 @@ router.beforeEach((to, from, next) => {
 
   const authRequiredPages = [
     'ProfileView',
-    'GenreSearchView',
     'GenreView',
     'GenreNotFoundView',
-    'MovieDetailView',
-    // 'SearchView'
+    'MovieDetailView',  
   ]
 
   if (authRequiredPages.includes(to.name) && !store.isLogin) {
