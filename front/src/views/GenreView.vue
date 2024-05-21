@@ -27,18 +27,19 @@
     </div>
   </div>
 
-  <div>
+  <div style="margin-right: 50px;">
     <div class="button-container">
       <button class="button" @click="fetchMovies" :disabled="selectedGenres.length === 0 && selectedMoods.length === 0">Go</button>
     </div>
   </div>
 
   <div v-if="movies.length">
-    <h2>선택된 장르 또는 무드의 영화</h2>
-    <div class="movies-container">
+    <h2 style="margin-left: 50px;">선택된 장르 또는 무드의 영화</h2>
+    <div class="movie-img">
       <div v-for="(movie, index) in movies.slice(0, 5)" :key="index" class="movie-item">
-        <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-poster" />
-        <p>{{ movie.title }}</p>
+        <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
+          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image"/>
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -49,6 +50,8 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import { useMovieStore } from '@/stores/modules/genres_and_moods'
+import { RouterLink, RouterView } from 'vue-router'
+
 
 const store = useMovieStore()
 const movies = ref([])
@@ -157,5 +160,30 @@ label {
 
 .button-container {
   text-align: right;
+}
+
+
+.movie-img {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movie-item {
+  margin: 10px;
+  transform: scale(0.9);
+  transition: transform 0.3s ease-in-out; 
+}
+
+.movie-item:hover {
+  transform: scale(1); 
+  filter: brightness(1.5); 
+}
+
+.movie-image {
+  width: 300px;
+  border-radius: 15px;
 }
 </style>
