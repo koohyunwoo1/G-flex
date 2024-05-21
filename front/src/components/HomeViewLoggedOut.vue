@@ -5,7 +5,7 @@
           <h4>Christopher Nolan</h4>
       </div>
       <div>
-          <h3 style="font-size: 25px;">G-Flex is a service that recommends movies automatically according to the user's preferred genres and moods.</h3>
+          <h3 style="font-size: 25px;">G-Flex is a service that recommends movies according to the user's preferred genres and moods.</h3>
       </div>
       <div>
           <!-- <h3>Made by </h3> -->

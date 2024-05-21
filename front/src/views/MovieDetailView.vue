@@ -6,12 +6,13 @@
       <img class="movie-poster" :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
         <div class="movie-info">
           <hr>
-          <p style="font-size: 50px;">{{ movie.title }}
-            <label style="font-size: 15px; margin:0px;" @click="handleLikeClick">
-              ❤️ 
-              좋아요 : {{ likeCount }}
+
+          <div style="display: flex; align-items: center;">
+            <p style="font-size: 50px; margin-top:30px; margin-bottom: 30px;">{{ movie.title }}</p>
+            <label style="font-size: 20px; margin-left: 30px;" @click="handleLikeClick">
+              ❤️ 좋아요 : {{ likeCount }}
             </label>
-          </p>
+          </div>  
           <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
           <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
           <p>상영시간 : {{ movie.runtime }}분</p>
@@ -263,8 +264,38 @@ onMounted(() => {
   margin-top: 20px;
 }
 
+
+.comment-input {
+  display: flex;
+  align-items: center;
+}
+
 .comment-input button {
   margin-top: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.comment-input textarea {
+  padding-top: 8px;
+  width: 300px;
+  height: 25px;
+  font-size: 18px;
+  border-radius: 10px;
+  resize: none;
+  color: black;
+  border: none;
+  border-bottom: 2px solid #0000007e;
+  outline: none;
+  margin-right: 10px;
+  display: inline-block;
+
+}
+
+.comment-input button {
+  margin-top: 0;
+  display: inline-block;
+
 }
 
 label {

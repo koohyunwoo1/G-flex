@@ -1,6 +1,7 @@
 <template>
+  <h1 style=" margin-top: 50px; margin-bottom: 0px; text-align: center;">원하는 태그를 선택하고 영화를 추천받으세요!</h1>
   <div class="container">
-    <h1>장르</h1>
+    <h2 style="margin-bottom: 30px; margin-left: 22px; font-size: 30px;">장르</h2>
     <div>
       <div v-if="genres">
         <span v-for="(genre, index) in genres" :key="index">
@@ -14,11 +15,15 @@
   </div>
 
   <div class="container">
-    <h1>무드</h1>
+    <div style="margin-left: 0px; margin-bottom: 22px;">
+
+      <h2 style="display: inline; margin-right: 22px; margin-bottom: 30px; margin-left: 22px; font-size: 30px;">무드</h2> 
+      <p style="display: inline; margin-bottom: 100px;">(최대 2개 선택)</p>
+    </div>
     <div>
       <div v-if="moods">
         <span v-for="(mood, index) in moods" :key="index">
-          <label :class="{ 'selected': selectedMoods.includes(mood.pk)}" @click="toggleMood(mood.pk)">
+          <label :class="{ 'selected': selectedMoods.includes(mood.pk)}" @click="toggleMood(mood.pk)" >
             {{ mood.name }}
           </label>
         </span>
@@ -150,6 +155,13 @@ moodslist()
 </script>
 
 <style scoped>
+
+h1 {
+  margin-left: 22px;
+}
+
+
+
 label {
   padding: 8px 16px;
   margin: 5px;
@@ -158,7 +170,8 @@ label {
   cursor: pointer;
   max-width: fit-content;
   border-radius: 5px;
-  border: solid 1px gray;
+  border: solid 1px #87CEEB;
+  /* border: solid 1px gray; */
 }
 
 .button {
@@ -171,7 +184,7 @@ label {
 
 .container {
   margin-left: 50px;
-  margin-top: 150px;
+  margin-top: 110px;
 }
 
 .button-container {
