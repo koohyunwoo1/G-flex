@@ -4,7 +4,7 @@
 
     <div class="container">
       <div class="search-container">
-        <input type="text" v-model="searchTerm" placeholder="영화를 한번 찾아보세요 !" class="search-input">
+        <input type="text" v-model="searchTerm" placeholder="영화를 한번 찾아보세요 !" class="search-input" @keyup.enter="createCommentOnEnter">
         <button @click="search" class="search-button">
           <span role="img" aria-label="search" class="search-icon">🔍</span>
         </button>
@@ -129,6 +129,13 @@ const homemovies = async () => {
 onMounted(() => {
   homemovies()
 });
+
+
+const createCommentOnEnter = (event) => {
+  if (event.key === 'Enter') {
+    search();
+  }
+}
 
 </script>
 
