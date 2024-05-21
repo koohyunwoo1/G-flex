@@ -29,7 +29,7 @@ User = get_user_model()
 @permission_classes([IsAuthenticated])
 def home(request):
 
-    movies = Movie.objects.order_by('-vote_count')[:3]
+    movies = Movie.objects.order_by('-vote_count')[:8]
     # 
     serializer = MovieHomeSerializer(movies, many=True)
 

@@ -9,31 +9,41 @@
       <div class="right-links">
         <RouterLink :to="{ name: 'GenreView' }">
           <button v-if="store.isLogin">
+            <b>
             G플리
+            </b>
           </button>
         </RouterLink>
         <template v-if="!store.isLogin">
           <RouterLink :to="{ name: 'LogInView' }">
             <button>
-              로그인
+              <b>
+                로그인
+              </b>
             </button>
           </RouterLink> 
           <RouterLink :to="{ name: 'SignUpView' }">
             <button>
-              회원가입
+              <b>
+                회원가입
+              </b>
             </button>
           </RouterLink>
         </template>
         <template v-else>
           <RouterLink :to="{ name: 'HomeView' }">
             <button @click="logOut">
-              로그아웃
+              <b>
+                로그아웃
+              </b>
             </button>
           </RouterLink> 
         </template>
         <RouterLink :to="{ name: 'ProfileView' }">
           <button  v-if="store.isLogin">
-            마이페이지
+            <b>
+              마이페이지
+            </b>
           </button>
         </RouterLink> 
       </div>
@@ -66,23 +76,25 @@ const logOut = function() {
 }
 
 body {
-  background-color: #000000;
+  background-image: url('assets/back_img10.jpg');
+  background-size: cover;
+  background-attachment: fixed;
   color: #ffffff;
   height: 100vh;
 }
 
 button {
-  background-color: #80CEE1;
-  color: #ffffff;
+  background-color: transparent;
+  color: white;
   border-radius: 10px;
-  border: none;
-  width: 80px;
+  border: 0.5px solid #87CEEB;
+  width: 90px;
   height: 40px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: red;
+  background-color: #80d6ff;
 }
 
 .logo {
