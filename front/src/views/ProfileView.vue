@@ -22,12 +22,6 @@
         </span>
       </div>
     </div>
-
-    <!-- <div style="margin: 100px;">
-      <h3>{{ store.logIn_username }}님께서 댓글 작성하신 영화 !</h3>
-      <ul>
-      </ul>
-    </div> -->
   </div>
 </template>
 
