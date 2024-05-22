@@ -1,5 +1,5 @@
 <template>
-  <h1 style=" margin-top: 50px; margin-bottom: 0px; text-align: center;">원하는 태그를 선택하고 영화를 추천받으세요!</h1>
+  <h1 style=" margin-top: 50px; margin-bottom: 0px; text-align: center;">원하는 태그를 선택하고 영화를 추천받으세요 !</h1>
   <div class="container">
     <h2 style="margin-bottom: 30px; margin-left: 22px; font-size: 30px;">장르</h2>
     <div>
