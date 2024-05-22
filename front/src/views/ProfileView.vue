@@ -17,7 +17,7 @@
       <div v-else>
         <span v-for="movie in likedMovies" :key="movie.id" style="margin-left: 20px;">
           <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.id }}">
-          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" style="width: 400px;" class="MovieCard">
+          <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" style="width: 300px;" class="MovieCard">
           </RouterLink>
         </span>
       </div>

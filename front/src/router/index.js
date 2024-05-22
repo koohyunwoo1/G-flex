@@ -6,12 +6,18 @@ import ProfileView from '@/views/ProfileView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import MovieDetailView from '@/views/MovieDetailView.vue'
 import GenreView from '@/views/GenreView.vue'
+import Gflex from '@/components/Gflex.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      name: 'Gflex',
+      component: Gflex
+    },
+    {
+      path: '/Home',
       name: 'HomeView',
       component: HomeView
     },

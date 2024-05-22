@@ -98,7 +98,6 @@ button:hover {
 }
 
 .logo {
-  /* font-size: 36px; */
   font-size: 40px;
   color: white;
   text-decoration: none;
