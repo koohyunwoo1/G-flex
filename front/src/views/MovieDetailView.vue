@@ -14,7 +14,7 @@
         <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
         <p>상영시간 : {{ movie.runtime }}분</p>
         <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
-        <hr>
+        <hr>  
         
         <div>
           <div class="like-comments-section">
@@ -34,8 +34,8 @@
                   
                   <div v-if="comment.user.username === store.logIn_username">
                     <template v-if="comment.pk !== editedCommentId">
-                      <button @click="deleteComment(comment.pk)">삭제</button>
-                      <button @click="toggleEdit(comment)">수정</button>
+                      <button style="width: 50px; margin-right: 10px;" @click="toggleEdit(comment)">수정</button>
+                    <button style="width: 50px;" @click="deleteComment(comment.pk)">삭제</button>
                     </template>
                     
                     <div v-if="comment.pk === editedCommentId">
@@ -43,11 +43,8 @@
                       <button @click="updateComment">수정 완료</button>
                       <button @click="cancelEdit">취소</button> 
                     </div>
-                  </div>
-              
-                  <div>
-                    <button style="width: 50px; margin-right: 10px;" @click="toggleEdit(comment)">수정</button>
-                    <button style="width: 50px;" @click="deleteComment(comment.pk)">삭제</button>
+
+
                   </div>
                 </div>
               </div>
