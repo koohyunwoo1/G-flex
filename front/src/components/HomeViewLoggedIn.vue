@@ -4,7 +4,7 @@
 
     <div class="container">
       <div class="search-container" style="text-align: center;">
-        <input type="text" v-model="searchTerm" placeholder="영화를 한번 찾아보세요 !" class="search-input" @keyup.enter="createCommentOnEnter">
+        <input type="text" v-model="searchTerm" placeholder="영화를 찾아보세요!" class="search-input" @keyup.enter="createCommentOnEnter">
         <button @click="search" class="search-button">
           <p aria-label="search" class="search-icon">🔍</p>
           <!-- <span role="img" aria-label="search" class="search-icon">🔍</span> -->
@@ -181,33 +181,36 @@ h2 {
 .search-container {
   margin-top: 20px;
   background-color: #333;
-  width: 350px;
-  padding: 10px 20px;
+  width: 600px;
+  padding: 10px 15px;
   border-radius: 25px;
   display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: center;
+  align-items: center;
+  /* justify-content: center; */
 }
 .search-input {
   background-color: #eee;
   border: none;
   border-radius: 15px;
   padding: 12px 12px;
-  margin-right: 10px;
-  width: 300px;
+  /* margin-right: 10px; */
+  width: 600px;
+  font-size: 15px;
+  /* justify-content: left; */
 }
 
 .search-button {
   background-color: transparent;
   border: none;
+  width: 60px;
   cursor: pointer;
   display: flex;
   align-items: center; /* Center icon vertically */
-  padding: 12px 12px; /* Match the padding of the input */
+  padding: 12px 0px 12px 6px; /* Match the padding of the input */
 }
 
 .search-icon {
-  font-size: 30px;
+  font-size: 29px;
   margin-left: 10px;
 }
 

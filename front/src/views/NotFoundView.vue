@@ -5,21 +5,55 @@
     <RouterLink to="/Home">홈으로 돌아가기</RouterLink>
     <div style="text-align: center; margin-top: 50px;">
       <p>인기 있는 검색어를 추천해드릴게요.</p>
-      <p>가디언즈 오브 갤럭시</p>
-      <p>어벤져스: 엔드게임</p> 
-      <p>어벤져스</p>
-      <p>범죄도시</p>
+      <div v-for="movie in randomMovies" :key="movie.id">
+        <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.id }}">
+          <p>{{ movie.title }}</p>
+        </RouterLink>
+      </div>
       <p></p>
     </div>
   </div>
 </template>
 
-<script setup>  
-import { RouterLink } from 'vue-router';
+<script setup>
+import { useMovieStore } from '@/stores/movie'
+import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { ref, onMounted, computed } from 'vue'
+
+const movies = ref([])
+const store = useMovieStore()
+const router = useRouter()
+
+const homemovies = async () => {
+  try {
+    const response = await axios.get(`${store.API_URL}/api/v1/movies/`, {
+      headers: {
+        Authorization: `Token ${store.token}`
+      }
+    });
+    movies.value = response.data
+  } catch (error) {
+    console.error('영화 데이터를 가져오는 도중 오류가 발생했습니다:', error)
+  }
+};
+
+const getRandomMovies = () => {
+  const shuffledMovies = movies.value.sort(() => 0.5 - Math.random())
+  return shuffledMovies.slice(0, 4)
+}
+
+const randomMovies = computed(() => getRandomMovies())
+
+onMounted(() => {
+  homemovies()
+});
+
 </script>
 
 <style scoped>
-h1{
+h1 {
   text-align: center;
   margin-top: 150px;
 }

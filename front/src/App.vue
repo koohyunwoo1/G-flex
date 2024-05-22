@@ -10,7 +10,7 @@
         <RouterLink :to="{ name: 'GenreView' }">
           <button v-if="store.isLogin">
             <b>
-            G플리
+            G 플리
             </b>
           </button>
         </RouterLink>
