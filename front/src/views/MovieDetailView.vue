@@ -44,8 +44,6 @@
                       <button @click="cancelEdit">취소</button> 
                     </div>
                   </div>
-                    
-                </p>
               
                   <div>
                     <button style="width: 50px; margin-right: 10px;" @click="toggleEdit(comment)">수정</button>
