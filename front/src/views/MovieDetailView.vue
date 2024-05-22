@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <h1 style="text-align: center; font-family: fantasy; font-size: 50px">G-Flex</h1>  -->
 
     <div v-if="movie" class="movie-container">
       <img class="movie-poster" :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
@@ -18,34 +17,38 @@
           <p>상영시간 : {{ movie.runtime }}분</p>
           <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
           <hr>
-        
-          <div class="like-comments-section">
-            <div class="comment-input">
-              <textarea v-model="newCommentContent" placeholder="영화에 대해 감상평을 남겨주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px; padding-left: 15px;"></textarea>
-              <button @click="createComment">댓글 작성</button>
-            </div>
-          </div>
-        
-          <div v-if="comments.length > 0">
-            <ul>
-              <li v-for="comment in comments" :key="comment.pk">
-                <p>{{ comment.user.username }}: {{ comment.content }}</p>
-
-                <template v-if="comment.pk !== editedCommentId">
-                  <button @click="deleteComment(comment.pk)">삭제</button>
-                  <button @click="toggleEdit(comment)">수정</button>
-                </template>
-
-                <div v-if="comment.pk === editedCommentId">
-                  <textarea v-model="editedCommentContent"></textarea>
-                  <button @click="updateComment">수정 완료</button>
-                  <button @click="cancelEdit">취소</button>
+          
+          <div>
+            <div class="like-comments-section">
+              <div class="comment-input">
+                <textarea v-model="newCommentContent" placeholder="감상평을 작성해 주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px; padding-left: 15px;"></textarea>
+                <button @click="createComment" style="width: 60px; height: 50px;">작성</button>
               </div>
-            </li>
-          </ul>
-        </div>
+            </div>
+            
+            <div v-if="comments.length > 0">
+              <!-- <ul> -->
+                <p v-for="comment in comments" :key="comment.pk">
 
-
+                  <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
+                  <p style="font-size: 15px;">{{ comment.content }}</p>
+                  <hr>
+                  
+                  <template v-if="comment.pk !== editedCommentId">
+                    <button @click="deleteComment(comment.pk)">삭제</button>
+                    <button @click="toggleEdit(comment)">수정</button>
+                  </template>
+                  
+                  <div v-if="comment.pk === editedCommentId">
+                    <textarea v-model="editedCommentContent"></textarea>
+                    <button @click="updateComment">수정 완료</button>
+                    <button @click="cancelEdit">취소</button>
+                  </div>
+                </p>
+              <!-- </ul> -->
+            </div>
+            
+          </div>
 
       </div>
     </div>
@@ -233,7 +236,7 @@ onMounted(() => {
 .movie-container {
   margin-left: 250px;
   margin-right: 250px;
-  margin-top: 40px;
+  margin-top: 100px;
   display: flex;
   align-items: flex-start; 
 }
@@ -278,8 +281,8 @@ onMounted(() => {
 
 .comment-input textarea {
   padding-top: 8px;
-  width: 300px;
-  height: 25px;
+  width: 800px;
+  height: 40px;
   font-size: 18px;
   border-radius: 10px;
   resize: none;
