@@ -1,12 +1,21 @@
 <template>
-  <div>
-
-    <div class="profile-container">
-      <div class="profile-header">
-        <div>
-          <h2>{{ store.logIn_username }}님의 프로필</h2>
+  <div style="margin: 0px 60px;">
+    <div>
+      <div class="profile-container" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="profile-header" style="margin-left: 150px;">
+          <div>
+            <h2>{{ store.logIn_username }}님의 프로필</h2>
+          </div>
         </div>
+        
+        
+        <div class="profile-header" style="margin-right: 150px;">
+          <h2>좋아요 한 영화 : {{ likedMovies.length }}개</h2>
+          
+        </div>
+        
       </div>
+      
     </div>
 
     <div style="margin: 100px;">
@@ -77,7 +86,7 @@ const getProfile = function() {
   display: flex;
   justify-content: left;
   align-items: left;
-  margin-left: 150px;
+  /* margin-left: 150px; */
   margin-top: 80px;
 }
 
@@ -85,7 +94,7 @@ const getProfile = function() {
   width: auto;
   border: solid 1px gray;
   border-radius: 25px;
-  padding: 20px;
+  padding: 15px;
   text-align: center;
 }
 
