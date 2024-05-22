@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1 style="text-align: center;">{{ store.logIn_username }}님 안녕하세요!</h1>
+  <div class="fade-in">
+    <h1 style="text-align: center;">{{ store.logIn_username }}님 안녕하세요 !</h1>
 
     <div class="container">
       <div class="search-container" style="text-align: center;">
@@ -25,8 +25,12 @@
             </div>
           </div>
         </Slide>
+        <template #addons>
+          <Navigation />
+        </template>
       </Carousel>
         
+      <div>
         <div class="center" style="margin-top: 250px;">
           <h3 v-if="exactMatches && exactMatches.length">검색 결과</h3>
           <div v-if="exactMatches && exactMatches.length" class="container-img">
@@ -42,14 +46,15 @@
         
         <div class="center">
           <h3 v-if="recommendedMovies && recommendedMovies.length">비슷한 작품</h3>
-            <div v-if="recommendedMovies && recommendedMovies.length" class="container-img">
-              <div v-for="(movie, index) in recommendedMovies" :key="index" class="movie-item">
-                <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
-                  <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image2">
-                </RouterLink>
+          <div v-if="recommendedMovies && recommendedMovies.length" class="container-img">
+            <div v-for="(movie, index) in recommendedMovies" :key="index" class="movie-item">
+              <RouterLink :to="{ name: 'MovieDetailView', params: { id: movie.pk }}">
+                <img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" class="movie-image2">
+              </RouterLink>
             </div>
           </div>
         </div>
+      </div>
         
     <RouterView />
   </div>
@@ -62,7 +67,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMovieStore } from '@/stores/movie'
 import { defineComponent } from 'vue'
-import { Carousel, Pagination, Slide } from 'vue3-carousel'
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 
@@ -73,6 +78,7 @@ defineComponent({
     Carousel,
     Slide,
     Pagination,
+    Navigation,
   },
 })
 
@@ -237,6 +243,7 @@ h2 {
 .movie-image2 {
   width: 300px;
   border-radius: 15px;
+  /* opacity: 0; */
 }
 .center {
   display: flex; 
@@ -255,5 +262,19 @@ h2 {
   opacity: 1;
   transform: rotateY(0) scale(1.1);
 }
+
+.fade-in {
+      animation: fadeInAnimation 1s ease-in forwards;
+  }
+  
+  @keyframes fadeInAnimation {
+      from {
+          opacity: 0;
+      }
+      to {
+          opacity: 1;
+      }
+  }
+
 
 </style>

@@ -2,7 +2,7 @@
   <div>
     <h1>검색 결과가 없습니다.</h1>
     <p class="p">다른 검색어로 다시 시도해주세요.</p>
-    <RouterLink to="/">홈으로 돌아가기</RouterLink>
+    <RouterLink to="/Home">홈으로 돌아가기</RouterLink>
     <div style="text-align: center; margin-top: 50px;">
       <p>인기 있는 검색어를 추천해드릴게요.</p>
       <div v-for="movie in randomMovies" :key="movie.id">

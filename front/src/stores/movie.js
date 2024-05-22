@@ -57,6 +57,7 @@ export const useMovieStore = defineStore('Movie', () => {
     })
     .catch((error) => {
       console.log('로그인 실패:', error)
+      alert('로그인 실패')
     })
   }
 
