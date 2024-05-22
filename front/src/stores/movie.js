@@ -14,7 +14,7 @@ export const useMovieStore = defineStore('Movie', () => {
   const router = useRouter()
   const route = useRoute()
   const isLogin = computed(() => token.value !== null)
-
+  
 
   const signUp = function (payload) {
     const { username, password1, password2 } = payload
@@ -49,7 +49,7 @@ export const useMovieStore = defineStore('Movie', () => {
     })
     .then((response) => {
       console.log('로그인 성공')
-      console.log(response.data)
+      // console.log(response.data)
       token.value = response.data.key
       logIn_username.value = username
       console.log(logIn_username)

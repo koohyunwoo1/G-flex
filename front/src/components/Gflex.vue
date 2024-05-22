@@ -78,7 +78,7 @@ body {
 }
 
 .content-hidden .fly-in-text li:nth-child(1) {
-  transform: translate3d(-60000px, 0, 0);
+  transform: translate3d(-600px, 0, 0);
 }
 
 .content-hidden .fly-in-text li:nth-child(2) {
@@ -86,18 +86,18 @@ body {
 }
 
 .content-hidden .fly-in-text li:nth-child(3) {
-  transform: translate3d(-10000px, -20000px, 0);
+  transform: translate3d(-100px, -200px, 0);
 }
 
 .content-hidden .fly-in-text li:nth-child(4) {
-  transform: translate3d(-15000px, 20000px, 0);
+  transform: translate3d(-150px, 200px, 0);
 }
 
 .content-hidden .fly-in-text li:nth-child(5) {
-  transform: translate3d(6000px, -9000px, 0);
+  transform: translate3d(60px, -90px, 0);
 }
 .content-hidden .fly-in-text li:nth-child(6) {
-  transform: translate3d(-15000px, 9000px, 0);
+  transform: translate3d(-150px, 90px, 0);
 }
 
 .content-hidden .enter-button {
