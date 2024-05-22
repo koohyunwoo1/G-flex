@@ -31,6 +31,13 @@
           </RouterLink>
         </template>
         <template v-else>
+          <RouterLink :to="{ name: 'HomeView' }">
+            <button>
+              <b>
+                Home
+              </b>
+            </button>
+          </RouterLink> 
           <RouterLink :to="{ name: 'ProfileView' }">
           <button>
             <b>

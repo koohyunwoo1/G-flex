@@ -19,6 +19,11 @@ export const useMovieStore = defineStore('Movie', () => {
   const signUp = function (payload) {
     const { username, password1, password2 } = payload
     
+    if (password1 !== password2) {
+      console.log('회원가입 실패: 비밀번호가 일치하지 않습니다.')
+      return alert('비밀번호가 일치하지 않습니다.')
+    }
+
     axios({
       method: 'post',
       url: `${API_URL}/accounts/signup/`,
@@ -34,8 +39,11 @@ export const useMovieStore = defineStore('Movie', () => {
     })
     .catch((error) => {
       console.log('회원가입 실패:', error.response.data)
+      alert('이미 아이디가 존재합니다.')
     })
   }
+
+
 
   const logIn = function (payload) {
     const { username, password } = payload

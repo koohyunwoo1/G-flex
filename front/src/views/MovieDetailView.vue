@@ -7,6 +7,8 @@
         <div style="display: flex; align-items: center;">
           <p style="font-size: 50px; margin-top:30px; margin-bottom: 30px;">{{ movie.title }}</p>
           <label style="font-size: 20px; margin-left: 30px;" @click="handleLikeClick">
+            <!-- <span v-if="likeCount > likeCount2" style="color: red;">❤️</span> -->
+            <!-- <span v-else>🤍</span>  -->
             ❤️ 좋아요 : {{ likeCount }}
           </label>
         </div>  
@@ -35,7 +37,7 @@
                   <div v-if="comment.user.username === store.logIn_username">
                     <template v-if="comment.pk !== editedCommentId">
                       <button style="width: 50px; margin-right: 10px;" @click="toggleEdit(comment)">수정</button>
-                    <button style="width: 50px;" @click="deleteComment(comment.pk)">삭제</button>
+                      <button style="width: 50px;" @click="deleteComment(comment.pk)">삭제</button>
                     </template>
                     
                     <div v-if="comment.pk === editedCommentId">
@@ -43,9 +45,9 @@
                       <button @click="updateComment">수정 완료</button>
                       <button @click="cancelEdit">취소</button> 
                     </div>
-
-
                   </div>
+
+
                 </div>
               </div>
               
@@ -88,12 +90,12 @@ const editedCommentContent = ref('') // 수정할 댓글의 내용
 const isLiked = ref(false) // 좋아요 상태
 const likeCount = ref(0) // 좋아요 수
 
+
 const handleLikeClick = function() {
   if (!isLiked.value) { // 이미 좋아요를 눌렀으면 무시
     toggleLike();
-  }
+  } 
 }
-
 
 const toggleLike = function() {
   axios({
@@ -106,7 +108,6 @@ const toggleLike = function() {
   .then((response) => {
     isLiked.value = response.data.is_liked;
     likeCount.value = response.data.like_users.length;
-    // console.log(likeCount);
   })
   .catch((error) => {
     console.log(error)
@@ -331,4 +332,5 @@ textarea {
   outline: none;
   /* margin-left: 250px; */
 }
+
 </style>
