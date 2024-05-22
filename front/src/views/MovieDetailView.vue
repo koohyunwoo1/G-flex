@@ -34,17 +34,19 @@
                   <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
                   <p style="font-size: 15px;">{{ comment.content }}</p>
                   <hr>
-                  
-                  <template v-if="comment.pk !== editedCommentId">
-                    <button @click="deleteComment(comment.pk)">삭제</button>
-                    <button @click="toggleEdit(comment)">수정</button>
-                  </template>
-                  
-                  <div v-if="comment.pk === editedCommentId">
-                    <textarea v-model="editedCommentContent"></textarea>
-                    <button @click="updateComment">수정 완료</button>
-                    <button @click="cancelEdit">취소</button>
-                  </div>
+                  <!-- <template v-if="comment.user.pk === store.user.pk"> -->
+
+                    <template v-if="comment.pk !== editedCommentId">
+                      <button @click="deleteComment(comment.pk)">삭제</button>
+                      <button @click="toggleEdit(comment)">수정</button>
+                    </template>
+                    
+                    <div v-if="comment.pk === editedCommentId">
+                      <textarea v-model="editedCommentContent"></textarea>
+                      <button @click="updateComment">수정 완료</button>
+                      <button @click="cancelEdit">취소</button>
+                    </div>
+                  <!-- </template> -->
                 </p>
               
             </div>
@@ -228,8 +230,6 @@ const createCommentOnEnter = (event) => {
 onMounted(() => {
   movies_information()
   fetchComments()
-
-  
 })
 </script>
 
