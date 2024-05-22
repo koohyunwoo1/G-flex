@@ -2,7 +2,7 @@
   <div>
     <div class="navbar">
       <div>
-        <RouterLink :to="{ name: 'HomeView' }" class="logo">
+        <RouterLink :to="{ name: 'Gflex' }" class="logo">
           G-Flex
         </RouterLink> 
       </div>
@@ -31,21 +31,21 @@
           </RouterLink>
         </template>
         <template v-else>
+          <RouterLink :to="{ name: 'ProfileView' }">
+          <button>
+            <b>
+              마이페이지
+            </b>
+          </button>
+        </RouterLink> 
           <RouterLink :to="{ name: 'HomeView' }">
-            <button @click="logOut">
+            <button @click="logOut" style="margin-right: 30px;">
               <b>
                 로그아웃
               </b>
             </button>
           </RouterLink> 
         </template>
-        <RouterLink :to="{ name: 'ProfileView' }">
-          <button  v-if="store.isLogin" style="margin-right: 30px;">
-            <b>
-              마이페이지
-            </b>
-          </button>
-        </RouterLink> 
       </div>
     </div>
     <RouterView />

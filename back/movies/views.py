@@ -30,6 +30,7 @@ User = get_user_model()
 def home(request):
 
     movies = Movie.objects.order_by('-vote_count')[:8]
+    # movies = Movie.objects.order_by('-vote_count')
     # 
     serializer = MovieHomeSerializer(movies, many=True)
 
