@@ -30,6 +30,21 @@
                 <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                   <p style="font-size: 15px;">{{ comment.content }}</p>
+                  <hr>
+                  
+                  <div v-if="comment.user.username === store.logIn_username">
+                    <template v-if="comment.pk !== editedCommentId">
+                      <button @click="deleteComment(comment.pk)">삭제</button>
+                      <button @click="toggleEdit(comment)">수정</button>
+                    </template>
+                    
+                    <div v-if="comment.pk === editedCommentId">
+                      <textarea v-model="editedCommentContent"></textarea>
+                      <button @click="updateComment">수정 완료</button>
+                      <button @click="cancelEdit">취소</button> 
+                    </div>
+                  </div>
+              
                   <div>
                     <button style="width: 50px; margin-right: 10px;" @click="toggleEdit(comment)">수정</button>
                     <button style="width: 50px;" @click="deleteComment(comment.pk)">삭제</button>
@@ -151,6 +166,7 @@ const createComment = function() {
   .then((response) => {
     comments.value = response.data
     newCommentContent.value = ''
+    console.log(comments)
   })
   .catch((error) => {
     console.log(error)
