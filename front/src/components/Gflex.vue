@@ -1,7 +1,4 @@
 <template>
-      <div class="wrapper">
-        <h1>G-Flex</h1>
-      </div>
       <div class="welcome-section content-hidden">
         <div class="content-wrap">
           <RouterLink :to="{ name: 'HomeView' }">
@@ -37,17 +34,7 @@ onMounted(() => {
 }
 
 body {
-  font-family: sans-serif;
   font-weight: 700;
-}
-
-.wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: lighter;
-  font-size: 40px;
 }
 
 .welcome-section {
@@ -69,6 +56,7 @@ body {
 
 .fly-in-text {
   list-style: none;
+  font-family: sans-serif;
 }
 
 .fly-in-text li {
