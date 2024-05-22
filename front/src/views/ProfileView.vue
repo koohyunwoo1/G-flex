@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 0px 60px;">
+  <div>
     <div>
       <div class="profile-container" style="display: flex; justify-content: space-between; align-items: center;">
         <div class="profile-header" style="margin-left: 150px;">
@@ -19,9 +19,9 @@
     </div>
 
     <div style="margin: 100px;">
-      <h3 style="margin-left: 50px;">{{ store.logIn_username }}님께서 좋아하시는 영화 !</h3>
+      <h3 style="margin-left: 50px;">{{ store.logIn_username }}님께서 좋아하는 영화 !</h3>
       <div v-if="likedMovies.length === 0">
-        <p>좋아하는 영화가 없습니다.</p>
+        <p style="margin-left: 50px;">좋아하는 영화가 없습니다.</p>
       </div>
       <div v-else>
         <span v-for="movie in likedMovies" :key="movie.id" style="margin-left: 20px;">
