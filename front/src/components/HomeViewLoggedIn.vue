@@ -11,6 +11,13 @@
         </button>
       </div>
     </div>
+    
+    <!-- 이건 검색하면 밑에 검색어 뜨게하는 코드? -->
+    <!-- <div v-if="exactMatches && exactMatches.length" class="search-results">
+      <div class="search-results-list">
+        <p v-for="(movie, index) in exactMatches" :key="index" class="search-result-item">{{ movie.title }}</p>
+      </div>
+    </div> -->
 
       <h2 class="h2">G-Flex가 추천드리는 영화</h2>
       <Carousel :itemsToShow="5.3" :wrapAround="true" :autoplay="2500">
