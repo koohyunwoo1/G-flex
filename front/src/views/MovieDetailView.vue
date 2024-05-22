@@ -1,66 +1,60 @@
-
 <template>
   <div>
-
     <div v-if="movie" class="movie-container">
       <img class="movie-poster" :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-        <div class="movie-info">
-          <hr>
-
-          <div style="display: flex; align-items: center;">
-            <p style="font-size: 50px; margin-top:30px; margin-bottom: 30px;">{{ movie.title }}</p>
-            <label style="font-size: 20px; margin-left: 30px;" @click="handleLikeClick">
-              ❤️ 좋아요 : {{ likeCount }}
-            </label>
-          </div>  
-          <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
-          <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
-          <p>상영시간 : {{ movie.runtime }}분</p>
-          <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
-          <hr>
-          
-          <div>
-            <div class="like-comments-section">
-              <div class="comment-input">
-                <textarea v-model="newCommentContent" placeholder="감상평을 작성해 주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px; padding-left: 15px;"></textarea>
-                <button @click="createComment" style="width: 60px; height: 50px;">작성</button>
-              </div>
+      <div class="movie-info">
+        <hr>
+        <div style="display: flex; align-items: center;">
+          <p style="font-size: 50px; margin-top:30px; margin-bottom: 30px;">{{ movie.title }}</p>
+          <label style="font-size: 20px; margin-left: 30px;" @click="handleLikeClick">
+            ❤️ 좋아요 : {{ likeCount }}
+          </label>
+        </div>  
+        <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
+        <p v-if="movie.genres.length > 0">장르 : {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
+        <p>상영시간 : {{ movie.runtime }}분</p>
+        <p style="font-size: 15px;">줄거리 : {{ movie.overview }}</p>
+        <hr>
+        
+        <div>
+          <div class="like-comments-section">
+            <div class="comment-input">
+              <textarea v-model="newCommentContent" placeholder="감상평을 작성해 주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px; padding-left: 15px; line-height: 35px;height: 35px;"></textarea>
+              <button @click="createComment" style="width: 60px; height: 50px;">작성</button>
             </div>
-            
-            <div v-if="comments.length > 0">
-              
-                <p v-for="comment in comments" :key="comment.pk">
-
-                  <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
-                  <p style="font-size: 15px;">{{ comment.content }}</p>
-                  <hr>
-                  <!-- <template v-if="comment.user.pk === store.user.pk"> -->
-
-                    <template v-if="comment.pk !== editedCommentId">
-                      <button @click="deleteComment(comment.pk)">삭제</button>
-                      <button @click="toggleEdit(comment)">수정</button>
-                    </template>
-                    
-                    <div v-if="comment.pk === editedCommentId">
-                      <textarea v-model="editedCommentContent"></textarea>
-                      <button @click="updateComment">수정 완료</button>
-                      <button @click="cancelEdit">취소</button>
-                    </div>
-                  <!-- </template> -->
-                </p>
-              
-            </div>
-            
           </div>
-
+          
+          <div v-if="comments.length > 0">
+            <div v-for="comment in comments" :key="comment.pk">
+              <div v-if="comment.pk !== editedCommentId">
+                <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <p style="font-size: 15px;">{{ comment.content }}</p>
+                  <div>
+                    <button style="width: 50px; margin-right: 10px;" @click="toggleEdit(comment)">수정</button>
+                    <button style="width: 50px;" @click="deleteComment(comment.pk)">삭제</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div v-else>
+                <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <textarea v-model="editedCommentContent" style="flex: 1;"></textarea>
+                  <div style="display:flex; gap:10px; align-items: center;">
+                    <button style="width: 80px; margin-left: 600px;" @click="updateComment">수정 완료</button>
+                    <button style="width: 50px;" @click="cancelEdit">취소</button>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
     <p v-else>No movies available</p>
-    
   </div>
-
-
 </template>
 
 <script setup>
@@ -284,7 +278,7 @@ onMounted(() => {
   padding-top: 8px;
   width: 800px;
   height: 40px;
-  font-size: 18px;
+  font-size: 15px;
   border-radius: 10px;
   resize: none;
   color: black;
@@ -314,8 +308,8 @@ label {
 textarea {
   padding-top: 8px;
   width: 300px;
-  height: 25px;
-  font-size: 18px;
+  height: 20px;
+  font-size: 15px;
   border-radius: 10px;
   resize: none;
   color: black;
