@@ -1,3 +1,4 @@
+
 <template>
   <div>
 
@@ -27,7 +28,7 @@
             </div>
             
             <div v-if="comments.length > 0">
-              <!-- <ul> -->
+              
                 <p v-for="comment in comments" :key="comment.pk">
 
                   <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
@@ -45,7 +46,7 @@
                     <button @click="cancelEdit">취소</button>
                   </div>
                 </p>
-              <!-- </ul> -->
+              
             </div>
             
           </div>
