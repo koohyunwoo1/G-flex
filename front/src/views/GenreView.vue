@@ -71,15 +71,12 @@ import { RouterLink, RouterView } from 'vue-router'
 
 const store = useMovieStore()
 const movies = ref([])
-
 const genres = ref([])
 const selectedGenres = ref([])
-
 const moods = ref([])
 const selectedMoods = ref([])
-
-// Go 버튼을 클릭하여 영화를 검색하고 나서 메시지를 표시할지 여부를 나타내는 변수
 const showNoMoviesMessage = ref(false)
+
 
 const genreslist = () => {
   axios.get(`${store.API_URL}/api/v1/movies/genre/`, {
@@ -124,7 +121,6 @@ const toggleMood = (moodPk) => {
 const fetchMovies = () => {
   if (selectedGenres.value.length === 0 && selectedMoods.value.length === 0) return;
 
-  // 선택된 장르와 무드 PK를 query string으로 변환
   const queryString = new URLSearchParams();
   selectedGenres.value.forEach(genrePk => {
     queryString.append('genre_pk', genrePk);
@@ -133,17 +129,15 @@ const fetchMovies = () => {
     queryString.append('mood_pk', moodPk);
   });
 
-  // API 호출 시 query string을 함께 전달
   axios.get(`${store.API_URL}/api/v1/movies/filter/?${queryString.toString()}`, {
     headers: { Authorization: `Token ${store.token}` }
   })
   .then(response => {
     movies.value = response.data;
-    // 검색 결과가 없을 경우 메시지 표시
     showNoMoviesMessage.value = movies.value.length === 0;
-    // 태그 초기화
     selectedGenres.value = [];
     selectedMoods.value = [];
+    scrollExactMatchesIntoView()
   })
   .catch(err => {
     console.error(err);
@@ -152,6 +146,16 @@ const fetchMovies = () => {
 
 genreslist()
 moodslist()
+
+const scrollExactMatchesIntoView = () => {
+  const centerElement = document.querySelector('.movie-img');
+  if (centerElement) {
+    centerElement.scrollIntoView({ behavior: 'smooth'});
+  } else {
+    setTimeout(scrollExactMatchesIntoView, 10)
+  }
+}
+
 </script>
 
 <style scoped>

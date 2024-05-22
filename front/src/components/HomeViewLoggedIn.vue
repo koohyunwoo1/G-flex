@@ -143,11 +143,12 @@ const createCommentOnEnter = (event) => {
   }
 }
 
-
 const scrollExactMatchesIntoView = () => {
   const centerElement = document.querySelector('.container-img');
   if (centerElement) {
     centerElement.scrollIntoView({ behavior: 'smooth'});
+  } else {
+    setTimeout(scrollExactMatchesIntoView, 10)
   }
 }
 
