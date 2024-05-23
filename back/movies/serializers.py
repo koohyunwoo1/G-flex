@@ -46,6 +46,8 @@ class MovieSearchSerializer(serializers.ModelSerializer):
         model = Movie
         fields = ('pk', 'words', 'title', 'poster_path', 'similarity')
 
+
+
 # 여러 영화 제공
         
 class MovieListSerializer(serializers.ModelSerializer):
@@ -53,7 +55,8 @@ class MovieListSerializer(serializers.ModelSerializer):
 
         model = Movie
         fields = ('pk', 'words', 'poster_path','title', 'moodtag', 'genres')
-    
+
+
 # 사용자가 선택 또는 좋아요 한 영화와 비슷한 영화
         
 class UserChoiceSimilarMovieSerializer(serializers.ModelSerializer):

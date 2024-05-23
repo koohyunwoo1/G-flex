@@ -46,6 +46,10 @@ def movie_detail(request, movie_pk):
 
     return Response(serializer.data)
 
+
+
+
+
 # detail 페이지에서 댓글 달기, 조회
 
 @api_view(['GET', 'POST'])
@@ -124,6 +128,8 @@ def search_movie(request, movie_name):
 
     serializer = serach(serializer.data, movie_name)
     return Response(serializer[:10])
+
+
 
 
 # 좋아요 한 영화를 기반으로 추천?
