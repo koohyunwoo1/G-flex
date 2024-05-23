@@ -34,7 +34,7 @@
           <RouterLink :to="{ name: 'HomeView' }">
             <button>
               <b>
-                Home
+                Search
               </b>
             </button>
           </RouterLink> 
