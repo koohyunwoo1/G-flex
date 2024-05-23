@@ -8,7 +8,6 @@ export const useMovieStore = defineStore('Movie', () => {
   const token = ref(null)
 
   const logIn_username = ref('')
-  // const movies = ref([])
 
   const movies = ref([])
   const router = useRouter()

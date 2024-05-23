@@ -58,10 +58,10 @@ class MovieListSerializer(serializers.ModelSerializer):
 
 # 사용자가 선택 또는 좋아요 한 영화와 비슷한 영화
         
-class UserChoiceSimilarMovieSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Movie
-        fields = ('pk','title', 'poster_path')
+# class UserChoiceSimilarMovieSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Movie
+#         fields = ('pk','title', 'poster_path')
 
 # 단일 영화 상세 정보
         

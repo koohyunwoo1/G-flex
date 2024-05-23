@@ -74,7 +74,6 @@ const getProfile = function() {
 .MovieCard {
   transform: scale(0.9);
   transition: transform 0.3s ease-in-out;
-  /* filter: brightness(0.5); */
 }
 
 .MovieCard:hover {
@@ -86,7 +85,6 @@ const getProfile = function() {
   display: flex;
   justify-content: left;
   align-items: left;
-  /* margin-left: 150px; */
   margin-top: 80px;
 }
 

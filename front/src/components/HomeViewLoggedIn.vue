@@ -10,13 +10,6 @@
         </button>
       </div>
     </div>
-    
-    <!-- 이건 검색하면 밑에 검색어 뜨게하는 코드? -->
-    <!-- <div v-if="exactMatches && exactMatches.length" class="search-results">
-      <div class="search-results-list">
-        <p v-for="(movie, index) in exactMatches" :key="index" class="search-result-item">{{ movie.title }}</p>
-      </div>
-    </div> -->
 
       <h2 class="h2">G-Flex가 추천드리는 영화</h2>
       <Carousel :itemsToShow="5.3" :wrapAround="true" :autoplay="2500">
@@ -89,11 +82,14 @@ defineComponent({
 })
 
 
-const movies = ref(null)
-const exactMatches = ref([])
-const recommendedMovies = ref([])
 const store = useMovieStore()
 const router = useRouter()
+
+const movies = ref(null)
+
+const exactMatches = ref([])
+
+const recommendedMovies = ref([])
 const searchTerm = ref('')
 
 
@@ -140,7 +136,6 @@ const homemovies = async () => {
     console.error('Error occurred while fetching movies:', error)
   }
 };
-
 
 
 const createCommentOnEnter = (event) => {
@@ -193,17 +188,14 @@ h2 {
   border-radius: 25px;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
 }
 .search-input {
   background-color: #eee;
   border: none;
   border-radius: 15px;
   padding: 12px 12px;
-  /* margin-right: 10px; */
   width: 600px;
   font-size: 15px;
-  /* justify-content: left; */
 }
 
 .search-button {
@@ -212,8 +204,8 @@ h2 {
   width: 60px;
   cursor: pointer;
   display: flex;
-  align-items: center; /* Center icon vertically */
-  padding: 12px 0px 12px 6px; /* Match the padding of the input */
+  align-items: center; 
+  padding: 12px 0px 12px 6px;
 }
 
 .search-icon {
@@ -250,7 +242,6 @@ h2 {
 .movie-image2 {
   width: 300px;
   border-radius: 15px;
-  /* opacity: 0; */
 }
 .center {
   display: flex; 
