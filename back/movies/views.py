@@ -47,9 +47,6 @@ def movie_detail(request, movie_pk):
     return Response(serializer.data)
 
 
-
-
-
 # detail 페이지에서 댓글 달기, 조회
 
 @api_view(['GET', 'POST'])

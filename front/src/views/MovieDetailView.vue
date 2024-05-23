@@ -87,8 +87,8 @@ const editedCommentId = ref(null) // 현재 수정 중인 댓글의 ID
 const editedCommentContent = ref('') // 수정할 댓글의 내용
 
 const isLiked = ref(false) // 좋아요 상태
-const likeCount = ref(0) // 좋아요 수
-const likeCount2 = ref(0)
+let likeCount = ref(0) // 좋아요 수
+let likeCount2 = ref(0)
 const commentMaxLength = 100; 
 
 
