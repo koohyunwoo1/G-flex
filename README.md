@@ -50,7 +50,7 @@
 ### accounts app
 ---
   ### 화면 인트로
-<img src ="assets/image-3.png"></img>
+<img src ="assets/record.gif"></img>
     - 애니메이션 효과 삽입
   ### 회원가입
 <img src ="assets/image.png"></img>

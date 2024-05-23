@@ -22,13 +22,6 @@
   },
   {
     "model": "movies.moodtag",
-    "pk": 4,
-    "fields": {
-      "name": "댄스를 부르는"
-    }
-  },
-  {
-    "model": "movies.moodtag",
     "pk": 5,
     "fields": {
       "name": "그냥 심심할 때 킬링타임"
