@@ -47,7 +47,6 @@ class MovieSearchSerializer(serializers.ModelSerializer):
         fields = ('pk', 'words', 'title', 'poster_path', 'similarity')
 
 
-
 # 여러 영화 제공
         
 class MovieListSerializer(serializers.ModelSerializer):

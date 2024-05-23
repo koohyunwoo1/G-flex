@@ -128,7 +128,6 @@ def search_movie(request, movie_name):
 
 
 
-
 # 좋아요 한 영화를 기반으로 추천?
 @api_view(['GET'])
 def user_like_movie(request, user_pk):
@@ -160,6 +159,7 @@ def user_like_movie(request, user_pk):
 
     return Response(final_serializer.data)
 
+# 유사한 영화 조회
 @api_view(['GET'])
 def similar_movie(request,movie_pk):
     movies = get_list_or_404(Movie)
