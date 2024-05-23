@@ -7,9 +7,9 @@
         <div style="display: flex; align-items: center;">
           <p style="font-size: 50px; margin-top:30px; margin-bottom: 30px;">{{ movie.title }}</p>
           <label style="font-size: 20px; margin-left: 30px;" @click="handleLikeClick">
-            <!-- <span v-if="likeCount > likeCount2" style="color: red;">❤️</span> -->
-            <!-- <span v-else>🤍</span>  -->
-            ❤️ 좋아요 : {{ likeCount }}
+            <span v-if="likeCount > likeCount2" style="color: red;">❤️</span>
+            <span v-else>🤍</span> 
+            좋아요 : {{ likeCount }}
           </label>
         </div>  
         <p v-if="movie.actors.length > 0">배우 : {{ movie.actors.map(actor => actor.name).join(', ') }}</p>
@@ -23,6 +23,7 @@
             <div class="comment-input">
               <textarea v-model="newCommentContent" placeholder="감상평을 작성해 주세요." @keyup.enter="createCommentOnEnter" style="font-size: 15px; padding-left: 15px; line-height: 35px;height: 35px;"></textarea>
               <button @click="createComment" style="width: 60px; height: 50px;">작성</button>
+              <div style="text-align: right; margin-left: 10px; margin-top: 10px;">{{ getCurrentCharacterCount() }}/{{ commentMaxLength }}</div>
             </div>
           </div>
           
@@ -46,17 +47,15 @@
                       <button @click="cancelEdit">취소</button> 
                     </div>
                   </div>
-
-
                 </div>
-              </div>
-              
+              </div>            
               <div v-else>
                 <p style="font-size: 15px; font-weight: bolder;">{{ comment.user.username }}</p>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <textarea v-model="editedCommentContent" style="flex: 1;"></textarea>
-                  <div style="display:flex; gap:10px; align-items: center;">
-                    <button style="width: 80px; margin-left: 600px;" @click="updateComment">수정 완료</button>
+                  <textarea v-model="editedCommentContent" style="flex: 1; padding: 10px; font-size: 15px;"></textarea>
+                  <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="text-align: right; margin-left: 10px; margin-top: 10px;">{{ getCurrentCharacterCount2() }}/{{ commentMaxLength }}</div>
+                    <button style="width: 80px;" @click="updateComment">수정 완료</button>
                     <button style="width: 50px;" @click="cancelEdit">취소</button>
                   </div>
                 </div>
@@ -89,6 +88,8 @@ const editedCommentContent = ref('') // 수정할 댓글의 내용
 
 const isLiked = ref(false) // 좋아요 상태
 const likeCount = ref(0) // 좋아요 수
+const likeCount2 = ref(0)
+const commentMaxLength = 100; 
 
 
 const handleLikeClick = function() {
@@ -106,8 +107,10 @@ const toggleLike = function() {
     }
   })
   .then((response) => {
-    isLiked.value = response.data.is_liked;
+    console.log(response)
     likeCount.value = response.data.like_users.length;
+    likeCount2.value = response.data.liee_users.length;
+    likeCount += 1
   })
   .catch((error) => {
     console.log(error)
@@ -151,6 +154,11 @@ const fetchComments = function() {
 }
 
 const createComment = function() {
+  if (newCommentContent.value.length > commentMaxLength) {
+    alert('설정하신 제한 글자수 100글자를 초과하였습니다.') 
+    return; 
+  }
+  
   axios({
     method: 'post',
     url: `${store.API_URL}/api/v1/movies/${movieId}/comments/`,
@@ -171,6 +179,15 @@ const createComment = function() {
   })
 }
 
+// 현재 입력된 글자 수를 반환하는 함수
+const getCurrentCharacterCount = () => {
+  return newCommentContent.value.length;
+}
+const getCurrentCharacterCount2 = () => {
+  return editedCommentContent.value.length;
+}
+
+
 const deleteComment = function(commentPk) {
   axios({
     method : 'delete',
@@ -180,7 +197,7 @@ const deleteComment = function(commentPk) {
     },
   })
   .then(() => {
-    // 성공적으로 삭제된 경우, 화면에서 해당 댓글을 제거합니다.
+    // 성공적으로 삭제된 경우, 화면에서 해당 댓글을 제거
     const index = comments.value.findIndex(comment => comment.pk === commentPk);
     if (index !== -1) {
       comments.value.splice(index, 1);
@@ -208,6 +225,11 @@ const cancelEdit = function() {
 }
 
 const updateComment = function() {
+  if (editedCommentContent.value.length > commentMaxLength) {
+    alert('설정하신 제한 글자수 100글자를 초과하였습니다.') 
+    return;
+  }
+
   axios({
     method: 'put',
     url: `${store.API_URL}/api/v1/movies/${movieId}/comments/${editedCommentId.value}/`,
@@ -219,7 +241,6 @@ const updateComment = function() {
     }
   })
   .then(() => {
-    // 댓글을 성공적으로 업데이트한 경우, 수정 입력란을 숨기고 댓글 목록을 다시 불러옵니다.
     editedCommentId.value = null
     editedCommentContent.value = ''
     fetchComments()
@@ -227,7 +248,10 @@ const updateComment = function() {
   .catch((error) => {
     console.log(error)
   })
+
+  getCurrentCharacterCount2();
 }
+
 
 const createCommentOnEnter = (event) => {
   if (event.key === 'Enter') {
