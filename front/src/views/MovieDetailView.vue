@@ -128,7 +128,6 @@ const movies_information = function() {
   })
   .then((response) => {
     movie.value = response.data
-    // isLiked.value = response.data.like_users.includes(store.user.pk);
     likeCount.value = response.data.like_users.length;
   })
   .catch((error) => {
@@ -354,7 +353,6 @@ textarea {
   border: none;
   border-bottom: 2px solid #0000007e;
   outline: none;
-  /* margin-left: 250px; */
 }
 
 </style>

@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useRouter } from 'vue-router'
 
 export const useMovieStore = defineStore('Movie', () => {
   const API_URL = 'http://127.0.0.1:8000'

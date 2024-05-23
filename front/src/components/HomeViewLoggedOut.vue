@@ -8,7 +8,6 @@
             <h3 style="font-size: 25px;">G-Flex is a service that recommends movies according to the user's preferred genres and moods.</h3>
         </div>
         <div>
-            <!-- <h3>Made by </h3> -->
             <h3 style="font-size: 20px;">Made by Hyunwoo Koo and Gootea Kim</h3>
         </div>
         <div>

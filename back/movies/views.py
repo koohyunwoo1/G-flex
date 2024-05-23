@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
-from .models import Actor, Genre, Movie, MoodTag, Comment
-from .serializers import UserSerializer, MovieSearchSerializer, MovieListSerializer, UserChoiceSimilarMovieSerializer, MovieDetailSerializer, GenreSerializer, MoodTagSerializer,MoodListSerializer, MovieHomeSerializer, UserLikeMovieListSerializer, GenreListSerializer, CommentSerializer
+from .models import Genre, Movie, MoodTag, Comment
+from .serializers import MovieSearchSerializer, MovieListSerializer, MovieDetailSerializer, GenreSerializer, MoodTagSerializer,MoodListSerializer, MovieHomeSerializer, GenreListSerializer, CommentSerializer
 
 from rest_framework import status
 
@@ -127,58 +127,6 @@ def search_movie(request, movie_name):
     return Response(serializer[:10])
 
 
-
-
-# 좋아요 한 영화를 기반으로 추천?
-@api_view(['GET'])
-def user_like_movie(request, user_pk):
-    user = get_object_or_404(User, pk = user_pk)
-    serializer = UserLikeMovieListSerializer(user)
-
-    movies = get_list_or_404(Movie)
-    movies_serializer = MovieListSerializer(movies, many=True)
-
-    # user가 좋아요한 영화 key값 담기
-    movie_key = [data['pk'] for data in serializer.data.get('like_movies')]
-
-    # user가 좋아요 한 영화 index 담기
-    idx = []
-    for key in movie_key:
-        for i in range(len(movies_serializer.data)):
-            if key == movies_serializer.data[i]['pk']:
-                idx.append(i)
-                break
-    # words 담기
-    xMovie = [data.get('words') for data in movies_serializer.data]
-
-    # 유사 영화 pk 반환
-    result = recommend_movies_names(xMovie, idx, movies_serializer)
-
-    # 유사 영화 pk 기반 querySet 생성
-    final_movie = [get_object_or_404(Movie, pk=i) for i in result]
-    final_serializer = UserChoiceSimilarMovieSerializer(final_movie, many=True)
-
-    return Response(final_serializer.data)
-
-@api_view(['GET'])
-def similar_movie(request,movie_pk):
-    movies = get_list_or_404(Movie)
-    serializer = MovieListSerializer(movies, many=True)
-
-    idx = []
-    for i in range(len(serializer.data)):
-        if movie_pk == serializer.data[i]['pk']:
-            idx.append(i)
-            break
-
-    xMovie = [data.get('words') for data in serializer.data]
-    result = recommend_movies_names(xMovie, idx, serializer)
-    final_movie = [get_object_or_404(Movie, pk=i) for i in result]
-    final_serializer = UserChoiceSimilarMovieSerializer(final_movie, many=True)
-    
-    return Response(final_serializer.data)
-
-
 # 추천 알고리즘
 def recommend_movies_names(xMovie, idx, movies):
     
@@ -232,6 +180,7 @@ def genre_list(request):
 
     return Response(serializer.data)
 
+# 해당 장르를 가진 영화 조회
 @api_view(['GET'])
 def genre_detail(request, genre_pk):
 
@@ -249,13 +198,15 @@ def mood_list(request):
 
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def mood_detail(request, mood_pk):
 
     mood = get_object_or_404(MoodTag, pk=mood_pk)
     serializer = MoodTagSerializer(mood)
     return Response(serializer.data)
-        
+
+# 장르와 무드로 필터링하여 추천되는 영화
 @api_view(['GET'])
 def filter_movies_by_genre_and_mood(request):
     selected_genre_pks = request.GET.getlist('genre_pk')
