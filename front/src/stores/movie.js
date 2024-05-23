@@ -39,7 +39,7 @@ export const useMovieStore = defineStore('Movie', () => {
     })
     .catch((error) => {
       console.log('회원가입 실패:', error.response.data)
-      alert('이미 아이디가 존재합니다.')
+      alert('회원가입 실패 !')
     })
   }
 
